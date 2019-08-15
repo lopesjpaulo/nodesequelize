@@ -1,20 +1,13 @@
 const express = require('express');
-const users = require('./app/routes/users');
-const teachers = require('./app/routes/teachers');
+const routes = require('./app/routes/routes')
 
 const app = express();
 
 app.use(express.urlencoded({
-    extended: false
+    extended: true
 }));
 
 //User.create({ name: 'João', email: 'joao@maxmeio.com', password: '123456'});
-
-app.get('/', (req, res) => {
-    res.send('Teste 1');
-});
-
-app.use('/', users);
-app.use('/', teachers);
+app.use('/', routes);
 
 app.listen(3000);
