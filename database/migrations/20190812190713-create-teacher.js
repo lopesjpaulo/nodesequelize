@@ -37,11 +37,12 @@ module.exports = {
       },
       cpf: {
         type: DataTypes.STRING(14),
-        allowNull: true
+        allowNull: true,
+        unique:true
       },
       balance: {
         type: DataTypes.DECIMAL(10,2),
-        allowNull: true
+        defaultValue: '0'
       },
       value_one: {
         type: DataTypes.DECIMAL(10,2),

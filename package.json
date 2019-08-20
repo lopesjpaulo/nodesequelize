@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "express-validator": "^6.1.1",
     "mysql2": "^1.6.5",
     "nodemon": "^1.19.1",
     "sequelize": "^5.12.1"
