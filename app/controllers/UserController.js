@@ -25,17 +25,19 @@ class UserController{
 
         if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
         
-        const user = await models.User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            createdAt: req.body.createdAt,
-            updatedAt: req.body.updatedAt
-        });
-        
-        if(!user) return res.status(400).json();
-        
-        return res.json(user);
+        try{
+            const user = await models.User.create({
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                createdAt: req.body.createdAt,
+                updatedAt: req.body.updatedAt
+            });
+
+            return res.json(user);
+        }catch{
+            return res.status(400).json();
+        }    
     }
 
     static async destroy(req, res) {
