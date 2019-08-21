@@ -10,18 +10,6 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      deletedAt: {
-        type:DataTypes.DATE,
-        allowNull: true
-      },
       name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -31,9 +19,25 @@ module.exports = {
         unique: true,
         allowNull: false
       },
+      birthday: {
+        type: DataTypes.STRING(10),
+        allowNull: true
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       phone: {
         type: DataTypes.STRING(15),
         allowNull: true,
+      },
+      state: {
+        type: DataTypes.STRING(2),
+        allowNull: true
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: true
       },
       cpf: {
         type: DataTypes.STRING(14),
@@ -56,6 +60,18 @@ module.exports = {
         type: DataTypes.DECIMAL(10,2),
         allowNull: true
       },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      deletedAt: {
+        type:DataTypes.DATE,
+        allowNull: true
+      }
     });
   },
 

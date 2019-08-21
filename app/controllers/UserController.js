@@ -1,5 +1,5 @@
 const models = require("./../models/index")
-const { check, validationResult } = require('express-validator')
+const { validationResult } = require('express-validator')
 
 class UserController{
     static async index(req, res) {
@@ -50,18 +50,6 @@ class UserController{
         if(!user) return res.status(400).json();
 
         return res.json(user);
-    }
-
-    static validate(method){
-        switch(method){
-            case 'create': {
-                return [
-                    check('name').exists().not().isEmpty(),
-                    check('email').exists().isEmail(),
-                    check('password').exists().not().isEmpty()
-                ]
-            }
-        }
     }
 }
 

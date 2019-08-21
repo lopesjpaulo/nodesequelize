@@ -19,6 +19,18 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      birthday: {
+        type: DataTypes.STRING(10),
+        allowNull: true
+      },
+      state: {
+        type: DataTypes.STRING(2),
+        allowNull: true
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: false
