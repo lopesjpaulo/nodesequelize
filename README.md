@@ -13,6 +13,14 @@ Posteriormente essa API será consumida por uma aplicação front-end React e um
 - Npm
 - Nodemon
 
+# Procedimentos
+
+1. Tenha o **Node.js** e o **npm** instalado
+2. Atualize as dependências do projeto usando o comando **npm i**
+3. Crie o banco de dados e caso seja necessário, mude os parâmentros de conexão ao banco de dados no arquivo **config.json** dentro da pasta **config**
+4. Execute o comando **npx sequelize db:migrate** para rodas as migrations e criar as tabelas no banco de dados selecionado
+5. Execute o comando **npx sequelize db:seed:all** para rodas as seeders e popular as tabelas com valores base
+
 # Autoria
 
 - João Paulo Lopes [lopesjpaulo](https://github.com/lopesjpaulo)

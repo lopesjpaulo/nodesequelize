@@ -59,9 +59,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DECIMAL,
             defaultValue: '0'
         },
-        value_one: DataTypes.DECIMAL,
-        value_five: DataTypes.DECIMAL,
-        value_ten: DataTypes.DECIMAL
+        valueOne: DataTypes.DECIMAL,
+        valueFive: DataTypes.DECIMAL,
+        valueTen: DataTypes.DECIMAL
     },
     {   
         classMethods: {

@@ -48,15 +48,15 @@ module.exports = {
         type: DataTypes.DECIMAL(10,2),
         defaultValue: '0'
       },
-      value_one: {
+      valueOne: {
         type: DataTypes.DECIMAL(10,2),
         allowNull: true
       },
-      value_five: {
+      valueFive: {
         type: DataTypes.DECIMAL(10,2),
         allowNull: true
       },
-      value_ten: {
+      valueTen: {
         type: DataTypes.DECIMAL(10,2),
         allowNull: true
       },
@@ -76,12 +76,6 @@ module.exports = {
   },
 
   down: (queryInterface, DataTypes) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.dropTable('users');
-    */
+    return queryInterface.dropTable('teachers');
   }
 };
