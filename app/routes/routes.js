@@ -1,6 +1,7 @@
 const express = require("express")
 const UserController = require("./../controllers/UserController")
 const TeacherController = require("./../controllers/TeacherController")
+const InstrumentController = require("./../controllers/InstrumentController")
 const validate = require('../helpers/validate')
 
 const routes = express.Router()
@@ -11,6 +12,8 @@ routes.post('/users', validate('create-user'), UserController.store)
 routes.delete('/users/:id', UserController.destroy)
 
 routes.get('/teachers', TeacherController.index);
+
+routes.get('/instruments', InstrumentController.index);
 
 module.exports = routes
 
