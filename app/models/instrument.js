@@ -17,9 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references : {
-                model: 'category',
+                model: 'categoriy',
                 key: 'id'
-            }
+            },
+            onDelete: 'CASCADE'
         }
     },
     {   
@@ -34,8 +35,16 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Instrument.associate = function(models) {
-        Instrument.belongsTo(models.Category, {foreignKey: 'categoryId', as: 'categories'})
-    }
+        Instrument.belongsToMany(models.User, {
+            through: 'instruments_users',
+            as: 'users',
+            foreignKey: 'instrumentId'
+        });
+        Instrument.belongsTo(models.Category, {
+            as: 'categories',
+            foreignKey: 'categoryId'
+        });
+    };
 
     return Instrument;
 }

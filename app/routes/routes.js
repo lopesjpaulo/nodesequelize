@@ -12,8 +12,10 @@ routes.post('/users', validate('create-user'), UserController.store)
 routes.delete('/users/:id', UserController.destroy)
 
 routes.get('/teachers', TeacherController.index);
+routes.get('/teachers/:id', TeacherController.show);
 
 routes.get('/instruments', InstrumentController.index);
+routes.get('/instruments/:id', InstrumentController.show);
 
 module.exports = routes
 

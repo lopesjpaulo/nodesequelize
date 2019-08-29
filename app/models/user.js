@@ -60,6 +60,14 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true
     });
 
+    User.associate = function(models) {
+        User.belongsToMany(models.Instrument, {
+            through: 'instruments_users',
+            as: 'instruments',
+            foreignKey: 'userId'
+        });
+    };
+
     User.prototype.isPassword = (encodedPassword, password) => {
         return compareSync(password, encodedPassword);
     };
