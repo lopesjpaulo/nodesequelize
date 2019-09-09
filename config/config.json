@@ -16,10 +16,10 @@
     "operatorsAliases": false
   },
   "production": {
-    "username": "root",
-    "password": null,
+    "username": "user_music",
+    "password": "password",
     "database": "music",
-    "host": "127.0.0.1",
+    "host": "mysql669.umbler.com",
     "dialect": "mysql",
     "operatorsAliases": false
   }
