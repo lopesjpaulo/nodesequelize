@@ -9,6 +9,8 @@ const routes = express.Router()
 routes.get('/users', UserController.index)
 routes.get('/users/:id', UserController.show)
 routes.post('/users', validate('create-user'), UserController.store)
+routes.put('/users/:id', UserController.update)
+routes.put('/users/:id/instruments', UserController.updateInstruments)
 routes.delete('/users/:id', UserController.destroy)
 
 routes.get('/teachers', TeacherController.index);

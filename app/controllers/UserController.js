@@ -1,5 +1,4 @@
 const models = require("./../models/index")
-const { Instrument } = require('../models')
 const { validationResult } = require('express-validator')
 
 class UserController{
@@ -48,14 +47,47 @@ class UserController{
             const { instruments, ...data } = req.body;
             const user = await models.User.create(data);
 
-            if(instruments && instruments.length > 0) {
+            /*if(instruments && instruments.length > 0) {
                 user.setIntruments({instruments, logging: console.log});
-            }
+            }*/
 
             return res.status(200).json(user);
         }catch (error){
             return res.status(500).json({error});
         }    
+    }
+
+    static async update(req, res) {
+        try {
+            if(!req.params.id) return res.status(400).json();
+
+            const user = await models.User.update(
+                req.body,
+                { where: { id: req.params.id }}
+            );
+
+            if(!user) return res.status(204).json();
+
+            return res.status(200).json(user);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async updateInstruments(req, res) {
+        try {
+            if(!req.params.id) return res.status(400).json();
+
+            const instruments = req.body.instruments;
+
+            instruments.forEach(Instrument => {
+                user.setIntruments(parseInt(Instrument));
+            });
+
+            return res.status(200).json();
+        } catch (error) {
+            return res.status(500).json({error});
+        }
     }
 
     static async destroy(req, res) {
