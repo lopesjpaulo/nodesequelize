@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Instrument = sequelize.define('Instrument', {
+    const Instrument = sequelize.define('instrument', {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
