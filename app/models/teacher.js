@@ -1,7 +1,7 @@
 const { genSaltSync, hashSync, compareSync } = require("bcryptjs");
 
 module.exports = (sequelize, DataTypes) => {
-    const Teacher = sequelize.define('teacher', {
+    const Teacher = sequelize.define('Teacher', {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
