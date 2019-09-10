@@ -32,6 +32,10 @@ module.exports = {
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: false
+      },
+      deletedAt: {
+        type:DataTypes.DATE,
+        allowNull: true
       }
     });
   },

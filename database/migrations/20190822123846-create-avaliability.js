@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('avaliabilities', { 
+    return queryInterface.createTable('Avaliabilities', { 
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -41,6 +41,6 @@ module.exports = {
   },
 
   down: (queryInterface, DataTypes) => {
-    return queryInterface.dropTable('avaliabilities');
+    return queryInterface.dropTable('Avaliabilities');
   }
 };

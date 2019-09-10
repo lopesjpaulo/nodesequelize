@@ -9,6 +9,12 @@ module.exports = (method) => {
                 check('password').exists().not().isEmpty()
             ]
         }
+        case 'login': {
+            return [
+                check('email').exists().isEmail(),
+                check('password').exists().not().isEmpty()
+            ]
+        }
     }
 };
 
