@@ -64,7 +64,8 @@ module.exports = (sequelize, DataTypes) => {
         User.belongsToMany(models.Instrument, {
             through: 'instruments_users',
             as: 'instruments',
-            foreignKey: 'userId'
+            foreignKey: 'userId',
+            otherKey: 'instrumentId'
         });
     };
 

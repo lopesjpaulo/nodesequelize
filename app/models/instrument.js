@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references : {
-                model: 'categoriy',
+                model: 'category',
                 key: 'id'
             },
             onDelete: 'CASCADE'
@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
         Instrument.belongsToMany(models.User, {
             through: 'instruments_users',
             as: 'users',
-            foreignKey: 'instrumentId'
+            foreignKey: 'instrumentId',
+            otherKey: 'userId'
         });
         Instrument.belongsTo(models.Category, {
             as: 'categories',

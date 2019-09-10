@@ -2,6 +2,7 @@ const express = require("express")
 const UserController = require("./../controllers/UserController")
 const TeacherController = require("./../controllers/TeacherController")
 const InstrumentController = require("./../controllers/InstrumentController")
+const AvaliabilityController = require("./../controllers/AvaliabilityController")
 const validate = require('../helpers/validate')
 
 const routes = express.Router()
@@ -19,6 +20,11 @@ routes.get('/teachers/:id', TeacherController.show);
 
 routes.get('/instruments', InstrumentController.index);
 routes.get('/instruments/:id', InstrumentController.show);
+
+routes.get('/avaliabilities', AvaliabilityController.index);
+routes.get('/avaliabilities/:id', AvaliabilityController.show);
+routes.post('/avaliabilities/', validate('avaliability'), AvaliabilityController.store);
+routes.post('/avaliabilities/available', AvaliabilityController.available);
 
 module.exports = routes
 

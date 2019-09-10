@@ -101,8 +101,17 @@ class UserController{
 
             const instruments = req.body.instruments;
 
-            instruments.forEach(instrument => {
-                models.User.setIntruments(parseInt(instrument));
+            instruments.forEach(item => {
+                const instrument = models.Instrument.findByPk(item.id);
+
+                if(!instrument) return res.status(400).json();
+
+                const iu = {
+                    userId: req.params.id,
+                    instrumentId: item
+                }
+
+                const instrument_user = models.InstrumentUser.create(iu);
             });
 
             return res.status(200).json();

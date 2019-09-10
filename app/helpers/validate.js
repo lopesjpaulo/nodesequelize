@@ -15,6 +15,12 @@ module.exports = (method) => {
                 check('password').exists().not().isEmpty()
             ]
         }
+        case 'avaliability': {
+            return [
+                check('date').exists().isISO8601(),
+                check('teacherId').exists().not().isEmpty()
+            ]
+        }
     }
 };
 
