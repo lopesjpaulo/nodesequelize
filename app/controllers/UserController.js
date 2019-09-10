@@ -81,7 +81,7 @@ class UserController{
             const instruments = req.body.instruments;
 
             instruments.forEach(Instrument => {
-                user.setIntruments(parseInt(Instrument));
+                user.setIntruments();
             });
 
             return res.status(200).json();
