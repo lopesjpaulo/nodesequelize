@@ -1,5 +1,7 @@
 const models = require("./../models/index")
 const { validationResult } = require('express-validator')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 class AvaliabilityController{
     static async index(req, res) {
@@ -61,6 +63,8 @@ class AvaliabilityController{
         try {
             let params = req.body;
             params.busy = 0;
+            params.date = { [Op.gt]: Date.now() };
+
             const avaliability = await models.Avaliability.findAll({
                 where: params,
                 include: [
@@ -84,14 +88,14 @@ class AvaliabilityController{
         try {
             if(!req.params.id) return res.status(400).json();
 
-            const user = await models.User.update(
+            const avaliability = await models.Avaliability.update(
                 req.body,
                 { where: { id: req.params.id }}
             );
 
-            if(!user) return res.status(204).json();
+            if(!avaliability) return res.status(204).json();
 
-            return res.status(200).json(user);
+            return res.status(200).json(avaliability);
         } catch (error) {
             return res.status(500).json({error});
         }
@@ -99,19 +103,18 @@ class AvaliabilityController{
 
     static async destroy(req, res) {
         try {
-            const user = await models.User.destroy({
+            const avaliability = await models.Avaliability.destroy({
                 where:{
                     id: req.params.id
                 }
             });
     
-            if(!user) return res.status(400).json();
+            if(!avaliability) return res.status(400).json();
     
-            return res.status(200).json(user);
+            return res.status(200).json(avaliability);
         } catch (error) {
             return res.status(500).json({error});
         }
-        
     }
 }
 
