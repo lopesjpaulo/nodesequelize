@@ -76,6 +76,15 @@ module.exports = (sequelize, DataTypes) => {
         timestamp: true,
         paranoid: true
     });
+
+    Teacher.associate = function(models) {
+        Teacher.belongsToMany(models.Instrument, {
+            through: 'InstrumentTeacher',
+            as: 'instruments',
+            foreignKey: 'teacherId',
+            otherKey: 'instrumentId'
+        });
+    };
     
     Teacher.prototype.isPassword = (encodedPassword, password) => {
         return compareSync(password, encodedPassword);

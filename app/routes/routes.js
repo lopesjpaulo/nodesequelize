@@ -26,6 +26,7 @@ routes.get('/teachers/:id', TeacherController.show);
 
 routes.get('/instruments', InstrumentController.index);
 routes.get('/instruments/:id', InstrumentController.show);
+routes.get('/instruments/:id/teachers', InstrumentController.getTeacher);
 
 /* Rotas de disponibilidades */
 
@@ -37,13 +38,3 @@ routes.put('/avaliabilities/:id', AvaliabilityController.update);
 routes.delete('/avaliabilities/:id', AvaliabilityController.destroy);
 
 module.exports = routes
-
-/**
- * 
- * [
-    check('name').not().isEmpty().withMessage('Insira um nome válido'),
-    check('email').not().isEmpty().isEmail().withMessage('Insira um email válido'),
-    check('password').not().isLength({ min: 5 }).withMessage('Insir')
-    ]
- * 
- */

@@ -96,7 +96,7 @@ class UserController{
     }
 
     static async updateInstruments(req, res) {
-        
+        try {
             if(!req.params.id) return res.status(400).json();
 
             const instruments = req.body.instruments;
@@ -111,11 +111,13 @@ class UserController{
                     instrumentId: item
                 }
 
-                const instrument_user = models.InstrumentUser.create(iu);
+                models.InstrumentUser.create(iu);
             });
 
             return res.status(200).json();
-        
+        } catch (error) {
+            res.status(500).json({error});
+        } 
     }
 
     static async destroy(req, res) {
@@ -132,7 +134,6 @@ class UserController{
         } catch (error) {
             return res.status(500).json({error});
         }
-        
     }
 }
 

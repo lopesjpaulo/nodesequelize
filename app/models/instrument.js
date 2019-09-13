@@ -41,6 +41,12 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'instrumentId',
             otherKey: 'userId'
         });
+        Instrument.belongsToMany(models.Teacher, {
+            through: 'InstrumentTeacher',
+            as: 'teachers',
+            foreignKey: 'instrumentId',
+            otherKey: 'teacherId'
+        });
         Instrument.belongsTo(models.Category, {
             as: 'categories',
             foreignKey: 'categoryId'

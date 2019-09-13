@@ -4,7 +4,15 @@ const { validationResult } = require("express-validator")
 class TeacherController{
     static async index(req, res) {
         try {
-            const teachers = await models.Teacher.findAll();
+            const teachers = await models.Teacher.findAll({
+                include: [
+                    {
+                        model: models.Instrument,
+                        as: 'instruments',
+                        through: { attributes: [] }
+                    }
+                ]
+            });
 
             if(!teachers) return res.status(204).json();
             
@@ -18,14 +26,37 @@ class TeacherController{
         try {
             if(!req.params.id) return res.status(400).json();
 
-            const instrument = await models.Instrument.findByPk(req.params.id);
+            const teacher = await models.Teacher.findByPk(req.params.id);
 
-            if(!instrument) return res.status(204).json();
+            if(!teacher) return res.status(204).json();
 
-            return res.status(200).json(instrument)
+            return res.status(200).json(teacher)
         } catch (error) {
             return res.status(500).json({error});
         }
+    }
+
+    static async getIntruments(req, res) {
+        
+            if(!req.params.instrument) return res.status(400).json();
+
+            const teachers = await models.Teacher.findAll({
+                include: [
+                    {
+                        model: models.Instrument,
+                        as: 'instruments',
+                        through: { attributes: [] }
+                    }
+                ],
+                where: {
+                    title: req.params.instrument,
+                }
+            });
+
+            if(!teachers) return res.status(204).json();
+
+            return res.status(200).json(teachers);
+        
     }
 }
 

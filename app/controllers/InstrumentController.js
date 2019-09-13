@@ -41,6 +41,31 @@ class InstrumentController{
             return res.status(500).json(error);
         }
     }
+
+    static async getTeacher(req, res){
+        if (!req.params.id) return res.status(400).json();
+
+        const teachers = await models.InstrumentTeacher.findAll({
+            attributes: ['id'],
+            include: [
+                {
+                    model: models.Teacher,
+                    attributes: ['name', 'valueOne', 'valueFive', 'valueTen']
+                },
+                {
+                    model: models.Instrument,
+                    attributes: ['title']
+                }
+            ],
+            where: {
+                instrumentId: req.params.id,
+            }
+        });
+
+        if(!teachers) return res.status(204).json();
+
+        return res.status(200).json(teachers);
+    }
 }
 
 module.exports = InstrumentController
