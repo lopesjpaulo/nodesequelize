@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Instrument.associate = function(models) {
         Instrument.belongsToMany(models.User, {
-            through: 'instruments_users',
+            through: 'InstrumentUser',
             as: 'users',
             foreignKey: 'instrumentId',
             otherKey: 'userId'

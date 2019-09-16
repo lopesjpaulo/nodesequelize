@@ -5,11 +5,12 @@ class UserController{
     static async index(req, res) {
         try {
             const users = await models.User.findAll({
+                attributes: ['id', 'name', 'email', 'birthday', 'state', 'city'],
                 include: [
                     {
                         model: models.Instrument,
                         as: 'instruments',
-                        through: { attributes: [] }
+                        attributes: ['id', 'title']
                     }
                 ]
             });

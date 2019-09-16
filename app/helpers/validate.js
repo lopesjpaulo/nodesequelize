@@ -21,6 +21,12 @@ module.exports = (method) => {
                 check('teacherId').exists().not().isEmpty()
             ]
         }
+        case 'schedule': {
+            return [
+                check('avaliabilityId').exists().not().isEmpty(),
+                check('userId').exists().not().isEmpty()
+            ]
+        }
     }
 };
 

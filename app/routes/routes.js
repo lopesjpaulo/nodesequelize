@@ -3,6 +3,7 @@ const UserController = require("./../controllers/UserController")
 const TeacherController = require("./../controllers/TeacherController")
 const InstrumentController = require("./../controllers/InstrumentController")
 const AvaliabilityController = require("./../controllers/AvaliabilityController")
+const ScheduleController = require("../controllers/ScheduleController")
 const validate = require('../helpers/validate')
 
 const routes = express.Router()
@@ -36,5 +37,13 @@ routes.post('/avaliabilities/', validate('avaliability'), AvaliabilityController
 routes.post('/avaliabilities/available', AvaliabilityController.available);
 routes.put('/avaliabilities/:id', AvaliabilityController.update);
 routes.delete('/avaliabilities/:id', AvaliabilityController.destroy);
+
+/* Rotas de agendamento */
+
+routes.get('/schedules', ScheduleController.index);
+routes.get('/schedules/:id', ScheduleController.show);
+routes.post('/schedules', validate('schedule'), ScheduleController.store);
+routes.put('/schedules/:id', ScheduleController.update);
+routes.delete('/schedules/:id', ScheduleController.destroy);
 
 module.exports = routes
