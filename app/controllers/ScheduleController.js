@@ -85,6 +85,10 @@ class ScheduleController{
             if(!avaliability) return res.status(204).json({ msg: 'Horário não disponível' });
 
             const schedule = await models.Schedule.create(req.body);
+            await models.Avaliability.update(
+                { busy: 1},
+                { where: { id: req.body.avaliabilityId }}
+            );
 
             return res.status(200).json(schedule);
         }catch (error){
