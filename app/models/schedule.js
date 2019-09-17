@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
               key: 'id'
           },
           onDelete: 'CASCADE'
+        },
+        finishedAt: {
+          type: DataTypes.DATE,
+          allowNull: true
         }
     },{
         classMethods: {

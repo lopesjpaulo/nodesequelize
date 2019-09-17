@@ -27,6 +27,13 @@ module.exports = (method) => {
                 check('userId').exists().not().isEmpty()
             ]
         }
+        case 'review': {
+            return [
+                check('scheduleId').exists().not().isEmpty(),
+                check('rating').exists().not().isEmpty(),
+                check('comment').exists().not().isEmpty()
+            ]
+        }
     }
 };
 

@@ -1,16 +1,12 @@
 'use strict';
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('Payments', {
+    return queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
-      },
-      paidAt: {
-        type: DataTypes.DATE,
-        allowNull: true
       },
       scheduleId: {
         type: DataTypes.INTEGER,
@@ -19,6 +15,14 @@ module.exports = {
           model: 'schedules',
           key: 'id'
         }
+      },
+      rating: {
+        allowNull: false,
+        type: DataTypes.INTEGER
+      },
+      comment: {
+        allowNull: true,
+        type: DataTypes.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +39,6 @@ module.exports = {
     });
   },
   down: (queryInterface, DataTypes) => {
-    return queryInterface.dropTable('Payments');
+    return queryInterface.dropTable('Reviews');
   }
 };

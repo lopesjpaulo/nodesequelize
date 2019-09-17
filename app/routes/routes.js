@@ -4,6 +4,7 @@ const TeacherController = require("./../controllers/TeacherController")
 const InstrumentController = require("./../controllers/InstrumentController")
 const AvaliabilityController = require("./../controllers/AvaliabilityController")
 const ScheduleController = require("../controllers/ScheduleController")
+const ReviewController = require("../controllers/ReviewController")
 const validate = require('../helpers/validate')
 
 const routes = express.Router()
@@ -45,5 +46,14 @@ routes.get('/schedules/:id', ScheduleController.show);
 routes.post('/schedules', validate('schedule'), ScheduleController.store);
 routes.put('/schedules/:id', ScheduleController.update);
 routes.delete('/schedules/:id', ScheduleController.destroy);
+
+/* Rotas de avaliações */
+
+routes.get('/reviews', ReviewController.index);
+routes.get('/reviews/:id', ReviewController.show);
+routes.get('/reviews/:id/getTeacher', ReviewController.getTeacher);
+routes.post('/reviews', validate('review'), ReviewController.store);
+routes.put('/reviews/:id', ReviewController.update);
+routes.delete('/reviews/:id', ReviewController.destroy);
 
 module.exports = routes
