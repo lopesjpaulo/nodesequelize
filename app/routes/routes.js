@@ -34,7 +34,7 @@ routes.get('/instruments/:id/teachers', InstrumentController.getTeacher);
 
 routes.get('/avaliabilities', AvaliabilityController.index);
 routes.get('/avaliabilities/:id', AvaliabilityController.show);
-routes.post('/avaliabilities/', validate('avaliability'), AvaliabilityController.store);
+routes.post('/avaliabilities', validate('avaliability'), AvaliabilityController.store);
 routes.post('/avaliabilities/available', AvaliabilityController.available);
 routes.put('/avaliabilities/:id', AvaliabilityController.update);
 routes.delete('/avaliabilities/:id', AvaliabilityController.destroy);

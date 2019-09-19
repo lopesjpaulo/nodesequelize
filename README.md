@@ -1,10 +1,10 @@
-## Node Sequelize
+# Node Sequelize
 
 Desenvolvimento de uma API REST construída em Node.js usando alguns conceitos de Typescript com foco no uso de Sequelize para conexão com banco de dados Mysql e o uso de migrations. O foco principal do desenvolvimento é o aprendizado de alguns conceitos e técnicas relativas ao Node.
 
 Posteriormente essa API será consumida por uma aplicação front-end React e uma aplicação mobile em React Native, ambos também desenvolvidas para aprendizagem de conceitos e técnicas. 
 
-# Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - Node.js
 - Typescript
@@ -13,7 +13,7 @@ Posteriormente essa API será consumida por uma aplicação front-end React e um
 - Npm
 - Nodemon
 
-# Procedimentos
+## Procedimentos
 
 1. Tenha o **Node.js** e o **npm** instalado
 2. Atualize as dependências do projeto usando o comando **npm i**
@@ -21,7 +21,7 @@ Posteriormente essa API será consumida por uma aplicação front-end React e um
 4. Execute o comando **npx sequelize db:migrate** para rodas as migrations e criar as tabelas no banco de dados selecionado
 5. Execute o comando **npx sequelize db:seed:all** para rodas as seeders e popular as tabelas com valores base
 
-# DOCKER 
+## DOCKER 
 
 1. Instale o Docker na sua máquina
 2. Execute o comando **docker-compose up phpmyadmin**
@@ -30,6 +30,6 @@ Posteriormente essa API será consumida por uma aplicação front-end React e um
 5. No campo host insira o valor **db**, no usuário insira **root** e no campo password insira **password**
 6. Importe a tabela e ajuste o nome das tabelas (provisório)
 
-# Autoria
+## Autoria
 
 - João Paulo Lopes [lopesjpaulo](https://github.com/lopesjpaulo)
