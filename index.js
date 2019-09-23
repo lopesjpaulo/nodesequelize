@@ -1,5 +1,3 @@
-require("dotenv-safe").load();
-var jwt = require('jsonwebtoken');
 const express = require('express');
 const routes = require('./app/routes/routes');
 
