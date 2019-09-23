@@ -1,5 +1,6 @@
 const models = require("./../models/index")
 const { validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken');
 
 class UserController{
     static async index(req, res) {
@@ -48,10 +49,6 @@ class UserController{
             const { instruments, ...data } = req.body;
             const user = await models.User.create(data);
 
-            /*if(instruments && instruments.length > 0) {
-                user.setIntruments({instruments, logging: console.log});
-            }*/
-
             return res.status(200).json(user);
         }catch (error){
             return res.status(500).json({error});
@@ -66,14 +63,19 @@ class UserController{
         try {
             const user = await models.User.findOne({
                 where: {
-                    email: req.body.email,
-                    password: req.body.password
+                    email: req.body.email
                 }
             });
 
-            if(!user) return res.status(204).json();
+            const password = user.isPassword(user.password, req.body.password);
 
-            return res.status(200).json(user);
+            if(!password) return res.status(204).json();
+
+            var token = jwt.sign(user.id, process.env.SECRET, {
+                expiresIn: 300
+            });
+
+            return res.status(200).json({ auth: true, token: token });
         } catch (error) {
             return res.status(500).json({error});
         }
@@ -83,14 +85,13 @@ class UserController{
         try {
             if(!req.params.id) return res.status(400).json();
 
-            const user = await models.User.update(
-                req.body,
-                { where: { id: req.params.id }}
-            );
+            const user = await models.User.findByPk(req.params.id);
 
-            if(!user) return res.status(204).json();
+            const result = user.update(req.body);
 
-            return res.status(200).json(user);
+            if(!result) return res.status(204).json();
+
+            return res.status(200).json(result);
         } catch (error) {
             return res.status(500).json({error});
         }
