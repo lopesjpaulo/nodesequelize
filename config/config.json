@@ -3,7 +3,7 @@
     "username": "root",
     "password": "password",
     "database": "music",
-    "host": "172.18.0.3",
+    "host": "0.0.0.0",
     "dialect": "mysql",
     "operatorsAliases": false
   },

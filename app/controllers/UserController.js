@@ -1,6 +1,7 @@
 const models = require("./../models/index")
 const { validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
+require('dotenv-safe').config();
 
 class UserController{
     static async index(req, res) {
@@ -71,7 +72,7 @@ class UserController{
 
             if(!password) return res.status(204).json();
 
-            var token = jwt.sign(user.id, process.env.SECRET, {
+            var token = jwt.sign({id: user.id}, process.env.SECRET, {
                 expiresIn: 300
             });
 
