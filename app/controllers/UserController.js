@@ -76,7 +76,7 @@ class UserController{
                 expiresIn: 300
             });
 
-            return res.status(200).json({ auth: true, token: token });
+            return res.status(200).json({ auth: true, token: token , id: user.id});
         } catch (error) {
             return res.status(500).json({error});
         }
