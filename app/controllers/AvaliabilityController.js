@@ -6,7 +6,7 @@ const Op = Sequelize.Op
 class AvaliabilityController{
     static async index(req, res) {
         try {
-            const avaliabilites = await models.Avaliability.findAll({
+            var avaliabilites = await models.Avaliability.findAll({
                 include: [
                     {
                         model: models.Teacher,
@@ -15,6 +15,15 @@ class AvaliabilityController{
                     }
                 ]
             });
+
+            for (var i = 0; i < avaliabilites.length; i++) {
+                var date = new Date(avaliabilites[i].date);
+                var datefull = date.getFullYear()+'-'+(date.getMonth() + 1)+'-'+date.getDate();
+                var time = date.getHours()+':'+date.getMinutes();
+
+                avaliabilites[i].dataValues.date = datefull;
+                avaliabilites[i].dataValues.time = time;
+            };
 
             if(!avaliabilites) return res.status(204).json();
         
