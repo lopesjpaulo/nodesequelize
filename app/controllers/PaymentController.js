@@ -140,8 +140,6 @@ class PaymentController {
                 ]
             });
 
-            return res.status(204).json(transaction);
-
             if (transaction.status == "paid") {
                 try {
                     const payment = await models.Payment.create(req.body);
@@ -150,7 +148,7 @@ class PaymentController {
                     return res.status(500).json({ error });
                 }
             } else {
-                return res.status(204).json(transaction);
+                return res.status(400).json(transaction);
             }
         } catch (error) {
             return res.status(500).json(error);
