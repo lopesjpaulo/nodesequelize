@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.7.0",
     "nodemon": "^1.19.2",
+    "pagarme": "^4.7.0",
     "sequelize": "^5.18.4"
   },
   "devDependencies": {

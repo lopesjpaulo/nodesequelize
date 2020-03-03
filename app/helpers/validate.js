@@ -1,38 +1,82 @@
-const { check } = require('express-validator')
+const { check } = require("express-validator");
 
-module.exports = (method) => {
-    switch(method){
-        case 'create-user': {
+module.exports = method => {
+    switch (method) {
+        case "create-user": {
             return [
-                check('name').exists().not().isEmpty(),
-                check('email').exists().isEmail(),
-                check('password').exists().not().isEmpty()
-            ]
+                check("name")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("email")
+                    .exists()
+                    .isEmail(),
+                check("password")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
         }
-        case 'login': {
+        case "login": {
             return [
-                check('email').exists().isEmail(),
-                check('password').exists().not().isEmpty()
-            ]
+                check("email")
+                    .exists()
+                    .isEmail(),
+                check("password")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
         }
-        case 'avaliability': {
+        case "avaliability": {
             return [
-                check('date').exists().isISO8601(),
-                check('teacherId').exists().not().isEmpty()
-            ]
+                check("date")
+                    .exists()
+                    .isISO8601(),
+                check("teacherId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
         }
-        case 'schedule': {
+        case "schedule": {
             return [
-                check('avaliabilityId').exists().not().isEmpty(),
-                check('userId').exists().not().isEmpty()
-            ]
+                check("avaliabilityId")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("userId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
         }
-        case 'review': {
+        case "review": {
             return [
-                check('scheduleId').exists().not().isEmpty(),
-                check('rating').exists().not().isEmpty(),
-                check('comment').exists().not().isEmpty()
-            ]
+                check("scheduleId")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("rating")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("comment")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
+        case "payment": {
+            return [
+                check("paidAt")
+                    .exists()
+                    .isISO8601(),
+                check("scheduleId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
         }
     }
 };
