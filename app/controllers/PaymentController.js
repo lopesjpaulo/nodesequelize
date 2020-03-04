@@ -66,7 +66,7 @@ class PaymentController {
             return res.status(422).json({ errors: errors.array() });
 
         const schedule = await models.Schedule.findByPk(req.body.scheduleId, {
-            attributes: ["id"],
+            attributes: ["id", "finishedAt"],
             include: [
                 {
                     model: models.Avaliability,
@@ -76,7 +76,7 @@ class PaymentController {
                         {
                             model: models.Teacher,
                             as: "teachers",
-                            attributes: ["valueOne"]
+                            attributes: ["name", "valueOne"]
                         }
                     ]
                 },
@@ -88,70 +88,76 @@ class PaymentController {
             ]
         });
 
-        const amount = parseInt(schedule.avaliabilities.teachers.valueOne);
+        if (schedule.finishedAt !== null) {
+            return res.status(409).json("Horário já ocupado!");
+        } else {
+            const amount = parseInt(schedule.avaliabilities.teachers.valueOne);
 
-        const client = await pagarme.client.connect({
-            api_key: "ak_test_lPm9JeybSi8HZqYYIEZmwkJGMf8JIi"
-        });
-
-        try {
-            const transaction = await client.transactions.create({
-                amount: amount,
-                payment_method: "credit_card",
-                card_number: "4111111111111111",
-                card_cvv: "623",
-                card_expiration_date: "0922",
-                card_holder_name: "Morpheus Fishburne",
-                customer: {
-                    external_id: toString(schedule.users.id),
-                    name: schedule.users.name,
-                    type: "individual",
-                    country: "br",
-                    email: schedule.users.email,
-                    documents: [
-                        {
-                            type: "cpf",
-                            number: "71404665560"
-                        }
-                    ],
-                    phone_numbers: ["+5511999998888", "+5511888889999"],
-                    birthday: "1985-01-01"
-                },
-                billing: {
-                    name: "Ciclano de Tal",
-                    address: {
-                        country: "br",
-                        state: "SP",
-                        city: "São Paulo",
-                        neighborhood: "Fulanos bairro",
-                        street: "Rua dos fulanos",
-                        street_number: "123",
-                        zipcode: "05170060"
-                    }
-                },
-                items: [
-                    {
-                        id: "2",
-                        title: "Aula de música",
-                        unit_price: amount,
-                        quantity: 1,
-                        tangible: false
-                    }
-                ]
+            const client = await pagarme.client.connect({
+                api_key: process.env.PAGARME_API_KEY
             });
 
-            if (transaction.status == "paid") {
-                try {
-                    const payment = await models.Payment.create(req.body);
-                    return res.status(200).json(payment);
-                } catch (error) {
-                    return res.status(500).json({ error });
+            try {
+                const transaction = await client.transactions.create({
+                    amount: amount,
+                    payment_method: "credit_card",
+                    card_number: "4111111111111111",
+                    card_cvv: "123",
+                    card_expiration_date: "0922",
+                    card_holder_name: "Morpheus Fishburne",
+                    customer: {
+                        external_id: toString(schedule.users.id),
+                        name: schedule.users.name,
+                        type: "individual",
+                        country: "br",
+                        email: schedule.users.email,
+                        documents: [
+                            {
+                                type: req.body.typeDocument,
+                                number: req.body.numberDocument
+                            }
+                        ],
+                        phone_numbers: ["+5511999998888", "+5511888889999"],
+                        birthday: "1985-01-01"
+                    },
+                    billing: {
+                        name: req.body.billingName,
+                        address: {
+                            country: req.body.country,
+                            state: req.body.state,
+                            city: req.body.city,
+                            neighborhood: req.body.bairro,
+                            street: req.body.street,
+                            street_number: req.body.number,
+                            zipcode: req.body.zipcode
+                        }
+                    },
+                    items: [
+                        {
+                            id: schedule.id.toString(),
+                            title:
+                                "Aula de música - " +
+                                schedule.avaliabilities.teachers.name,
+                            unit_price: amount,
+                            quantity: 1,
+                            tangible: false
+                        }
+                    ]
+                });
+
+                if (transaction.status == "paid") {
+                    try {
+                        const payment = await models.Payment.create(req.body);
+                        return res.status(200).json(payment);
+                    } catch (error) {
+                        return res.status(500).json({ error });
+                    }
+                } else {
+                    return res.status(400).json(transaction);
                 }
-            } else {
-                return res.status(400).json(transaction);
+            } catch (error) {
+                return res.status(500).json(error);
             }
-        } catch (error) {
-            return res.status(500).json(error);
         }
     }
 }
