@@ -12,7 +12,7 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-          model: 'schedules',
+          model: 'Schedules',
           key: 'id'
         }
       },

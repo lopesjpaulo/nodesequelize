@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('InstrumentUsers', { 
+    return queryInterface.createTable('InstrumentUsers', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,7 +13,7 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'instruments',
+          model: 'Instruments',
           key: 'id'
         }
       },
@@ -21,7 +21,7 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-          model: 'users',
+          model: 'Users',
           key: 'id'
         }
       },
