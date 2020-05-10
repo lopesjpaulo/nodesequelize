@@ -9,7 +9,9 @@ module.exports = {
         birthday: '01/01/1990',
         state: 'RN',
         city: 'Natal',
-        password: '12345678'
+        password: '12345678',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         name: 'Mark One',
@@ -17,7 +19,9 @@ module.exports = {
         birthday: '10/10/1980',
         state: 'PB',
         city: 'João Pessoa',
-        password: '123456'
+        password: '123456',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },
