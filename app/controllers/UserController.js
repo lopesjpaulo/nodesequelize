@@ -18,12 +18,12 @@ class UserController{
             });
 
             if(!users) return res.status(204).json();
-        
+
             return res.status(200).json(users);
         } catch (error) {
             return res.status(500).json({error});
         }
-        
+
     }
 
     static async show(req, res) {
@@ -38,22 +38,28 @@ class UserController{
         } catch (error) {
             return res.status(500).json({error})
         }
-        
+
     }
 
     static async store(req, res) {
         const errors = validationResult(req);
 
-        if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
-        
+        if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array(), data: req.body });
+
         try{
             const { instruments, ...data } = req.body;
             const user = await models.User.create(data);
 
-            return res.status(200).json(user);
+            if(!user) return res.status(200).json({ auth: false });
+
+            let token = jwt.sign({id: user.id}, process.env.SECRET, {
+                expiresIn: 300
+            });
+
+            return res.status(200).json({ auth: true, token: token , user: user});
         }catch (error){
             return res.status(500).json({error});
-        }    
+        }
     }
 
     static async login(req, res) {
@@ -68,15 +74,17 @@ class UserController{
                 }
             });
 
+            if(!user) return res.status(200).json({ auth: false });
+
             const password = user.isPassword(user.password, req.body.password);
 
-            if(!password) return res.status(204).json();
+            if(!password) return res.status(200).json({ auth: false});
 
             var token = jwt.sign({id: user.id}, process.env.SECRET, {
                 expiresIn: 300
             });
 
-            return res.status(200).json({ auth: true, token: token , id: user.id});
+            return res.status(200).json({ auth: true, token: token , user: user});
         } catch (error) {
             return res.status(500).json({error});
         }
@@ -120,7 +128,7 @@ class UserController{
             return res.status(200).json();
         } catch (error) {
             res.status(500).json({error});
-        } 
+        }
     }
 
     static async destroy(req, res) {
@@ -130,9 +138,9 @@ class UserController{
                     id: req.params.id
                 }
             });
-    
+
             if(!user) return res.status(400).json();
-    
+
             return res.status(200).json(user);
         } catch (error) {
             return res.status(500).json({error});
