@@ -53,7 +53,7 @@ class UserController{
             if(!user) return res.status(200).json({ auth: false });
 
             let token = jwt.sign({id: user.id}, process.env.SECRET, {
-                expiresIn: 300
+                expiresIn: "30 days"
             });
 
             return res.status(200).json({ auth: true, token: token , user: user});
@@ -81,7 +81,7 @@ class UserController{
             if(!password) return res.status(200).json({ auth: false});
 
             var token = jwt.sign({id: user.id}, process.env.SECRET, {
-                expiresIn: 300
+                expiresIn: "30 days"
             });
 
             return res.status(200).json({ auth: true, token: token , user: user});

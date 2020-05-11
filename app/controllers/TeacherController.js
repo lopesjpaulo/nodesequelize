@@ -16,7 +16,7 @@ class TeacherController{
             });
 
             if(!teachers) return res.status(204).json();
-            
+
             return res.status(200).json(teachers);
         } catch (err) {
             return res.status(500).json({err});
