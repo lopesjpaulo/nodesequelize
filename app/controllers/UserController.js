@@ -92,9 +92,7 @@ class UserController{
 
     static async update(req, res) {
         try {
-            if(!req.params.id) return res.status(400).json();
-
-            const user = await models.User.findByPk(req.params.id);
+            const user = await models.User.findByPk(req.userId);
 
             const result = user.update(req.body);
 
@@ -108,22 +106,25 @@ class UserController{
 
     static async updateInstruments(req, res) {
         try {
-            if(!req.params.id) return res.status(400).json();
-
             const instruments = req.body.instruments;
 
+            let items = [];
+
             instruments.forEach(item => {
-                const instrument = models.Instrument.findByPk(item.id);
-
-                if(!instrument) return res.status(400).json();
-
                 const iu = {
-                    userId: req.params.id,
-                    instrumentId: item
-                }
+                    userId: req.userId,
+                    instrumentId: item['id']
+                };
 
-                models.InstrumentUser.create(iu);
+                items.push(iu);
             });
+
+            models.InstrumentUser.bulkCreate(items)
+                .then(function(events) {
+                    console.log('salvou')
+                }).catch(function(err) {
+                    console.log(err)
+                });
 
             return res.status(200).json();
         } catch (error) {

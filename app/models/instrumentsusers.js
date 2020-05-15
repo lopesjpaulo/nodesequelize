@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const InstrumentUser = sequelize.define('InstrumentUser', {
     id: {
         type: DataTypes.INTEGER,
+        defaultValue: sequelize.UUIDV1,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true

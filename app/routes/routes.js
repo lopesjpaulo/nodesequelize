@@ -29,8 +29,8 @@ routes.get("/users", verifyJWT, UserController.index);
 routes.get("/users/:id", verifyJWT, UserController.show);
 routes.post("/users", [validate("create-user")], UserController.store);
 routes.post("/users/login", [validate("login")], UserController.login);
-routes.put("/users/:id", verifyJWT, UserController.update);
-routes.put("/users/:id/instruments", verifyJWT, UserController.updateInstruments);
+routes.put("/users", verifyJWT, UserController.update);
+routes.put("/users/instruments", verifyJWT, UserController.updateInstruments);
 routes.delete("/users/:id", verifyJWT, UserController.destroy);
 
 /* Rotas de professores */
@@ -46,7 +46,7 @@ routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeach
 
 /* Rotas de disponibilidades */
 
-routes.get("/avaliabilities", verifyJWT, AvaliabilityController.index);
+routes.get("/avaliabilities/:teacherId", verifyJWT, AvaliabilityController.index);
 routes.get("/avaliabilities/:id", verifyJWT, AvaliabilityController.show);
 routes.post(
     "/avaliabilities",
