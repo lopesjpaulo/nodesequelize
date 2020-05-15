@@ -8,6 +8,7 @@ class AvaliabilityController{
         try {
             var avaliabilites = await models.Avaliability.findAll({
                 where: {
+                    busy: 0,
                     teacherId: req.params.teacherId,
                     date: {
                         [Op.gte]: Date.now()
