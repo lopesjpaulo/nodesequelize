@@ -8,6 +8,9 @@ class ScheduleController{
         try {
             const schedules = await models.Schedule.findAll({
                 attributes: ['id'],
+                order: [
+                    [ 'avaliabilities', 'date', 'ASC' ]
+                ],
                 include: [
                     {
                         model: models.Avaliability,
@@ -26,7 +29,7 @@ class ScheduleController{
                         as: 'users',
                         attributes: ['id', 'name', 'email']
                     }
-                ]
+                ],
             });
 
             if(!schedules) return res.status(204).json();
@@ -83,8 +86,6 @@ class ScheduleController{
             });
 
             if(!avaliability) return res.status(204).json({ msg: 'Horário não disponível' });
-
-
 
             const schedule = await models.Schedule.create({
                 avaliabilityId: req.body.avaliabilityId,
