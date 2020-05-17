@@ -18,7 +18,7 @@ module.exports = {
       },
       deletedAt: {
         allowNull: true,
-        type: DataTypes.DATE
+        type: Sequelize.DATE
       }
     });
   },

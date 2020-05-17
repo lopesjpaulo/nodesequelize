@@ -5,19 +5,27 @@ module.exports = {
     return queryInterface.bulkInsert('Instruments', [
       {
         title: 'Violão',
-        categoryId: '1'
+        categoryId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         title: 'Cavaquinho',
-        categoryId: '1'
+        categoryId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         title: 'Piano',
-        categoryId: '3'
+        categoryId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         title: 'Bateria',
-        categoryId: '2'
+        categoryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },

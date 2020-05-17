@@ -8,6 +8,9 @@ class ScheduleController{
         try {
             const schedules = await models.Schedule.findAll({
                 attributes: ['id'],
+                order: [
+                    [ 'avaliabilities', 'date', 'ASC' ]
+                ],
                 include: [
                     {
                         model: models.Avaliability,
@@ -26,11 +29,11 @@ class ScheduleController{
                         as: 'users',
                         attributes: ['id', 'name', 'email']
                     }
-                ]
+                ],
             });
 
             if(!schedules) return res.status(204).json();
-        
+
             return res.status(200).json(schedules);
         } catch (error) {
             return res.status(500).json({error});
@@ -76,7 +79,7 @@ class ScheduleController{
         const errors = validationResult(req);
 
         if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
-        
+
         try{
             const avaliability = await models.Avaliability.findOne({
                 where: { id: req.body.avaliabilityId, busy: 0, date: { [Op.gt]: Date.now() } }
@@ -84,7 +87,10 @@ class ScheduleController{
 
             if(!avaliability) return res.status(204).json({ msg: 'Horário não disponível' });
 
-            const schedule = await models.Schedule.create(req.body);
+            const schedule = await models.Schedule.create({
+                avaliabilityId: req.body.avaliabilityId,
+                userId: req.userId,
+            });
             await models.Avaliability.update(
                 { busy: 1},
                 { where: { id: req.body.avaliabilityId }}
@@ -93,7 +99,7 @@ class ScheduleController{
             return res.status(200).json(schedule);
         }catch (error){
             return res.status(500).json({error});
-        }    
+        }
     }
 
     static async update(req, res) {
@@ -120,9 +126,9 @@ class ScheduleController{
                     id: req.params.id
                 }
             });
-    
+
             if(!schedule) return res.status(400).json();
-    
+
             return res.status(200).json(schedule);
         } catch (error) {
             return res.status(500).json({error});

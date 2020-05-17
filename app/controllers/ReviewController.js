@@ -32,7 +32,7 @@ class ReviewController{
             });
 
             if(!reviews) return res.status(204).json();
-        
+
             return res.status(200).json(reviews);
         } catch (error) {
             return res.status(500).json({error});
@@ -87,16 +87,19 @@ class ReviewController{
                         model: models.Schedule,
                         as: 'schedules',
                         attributes: ['id', 'userId', 'finishedAt'],
+                        required: true,
                         include: [
                             {
                                 model: models.Avaliability,
                                 as: 'avaliabilities',
                                 attributes: ['id', 'date'],
+                                required: true,
                                 include: [
                                     {
                                         model: models.Teacher,
                                         as: 'teachers',
-                                        attributes: ['id', 'name', 'email']
+                                        attributes: ['id', 'name', 'email'],
+                                        required: true
                                     }
                                 ],
                                 where: {
@@ -109,7 +112,7 @@ class ReviewController{
             });
 
             if(!reviews) return res.status(204).json();
-        
+
             return res.status(200).json(reviews);
         } catch (error) {
             return res.status(500).json({error});
@@ -120,14 +123,14 @@ class ReviewController{
         const errors = validationResult(req);
 
         if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
-        
+
         try{
             const review = await models.Review.create(req.body);
 
             return res.status(200).json(review);
         }catch (error){
             return res.status(500).json({error});
-        }    
+        }
     }
 
     static async update(req, res) {
@@ -154,9 +157,9 @@ class ReviewController{
                     id: req.params.id
                 }
             });
-    
+
             if(!review) return res.status(400).json();
-    
+
             return res.status(200).json(review);
         } catch (error) {
             return res.status(500).json({error});

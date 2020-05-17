@@ -14,7 +14,9 @@ module.exports = {
         cpf: '123.456.789-00',
         valueOne: '60.0',
         valueFive: '270.0',
-        valueTen: '540.0' 
+        valueTen: '540.0',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         name: 'Teacher two',
@@ -27,7 +29,9 @@ module.exports = {
         cpf: '123.456.789-01',
         valueOne: '100.0',
         valueFive: '475.0',
-        valueTen: '900.0' 
+        valueTen: '900.0',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },
