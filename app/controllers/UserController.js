@@ -119,12 +119,20 @@ class UserController{
                 items.push(iu);
             });
 
-            models.InstrumentUser.bulkCreate(items)
-                .then(function(events) {
-                    console.log('salvou')
-                }).catch(function(err) {
-                    console.log(err)
-                });
+            await models.InstrumentUser.destroy({
+                where:{
+                    userId: req.userId
+                }
+            }).then(() => {
+                models.InstrumentUser.bulkCreate(items)
+                    .then(function(events) {
+                        console.log('salvou')
+                    }).catch(function(err) {
+                        console.log(err)
+                    });
+            }).catch(function(err) {
+                console.log(err)
+            });
 
             return res.status(200).json();
         } catch (error) {
