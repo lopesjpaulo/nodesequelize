@@ -8,6 +8,10 @@ module.exports = method => {
                     .exists()
                     .not()
                     .isEmpty(),
+                check("lastname")
+                    .exists()
+                    .not()
+                    .isEmpty(),
                 check("email")
                     .exists()
                     .isEmail(),

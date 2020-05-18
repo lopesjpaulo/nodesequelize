@@ -15,6 +15,13 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
+        lastname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -44,6 +51,11 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: true
             }
+        },
+        pathImage: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
         }
     },
     {

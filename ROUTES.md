@@ -8,11 +8,13 @@
 -   POST
     -   /users
         -   name
+        -   lastname
         -   email
         -   birthday
         -   state
         -   city
         -   password
+        -   pathImage
     -   /users/login
         -   email
         -   password
