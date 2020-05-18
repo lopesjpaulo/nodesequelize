@@ -28,6 +28,23 @@
 -   GET
     -   /teachers
     -   /teachers/:id
+-   POST
+    -   /teachers
+        -   name
+        -   email
+        -   birthday
+        -   phone
+        -   cep
+        -   state
+        -   city
+        -   cpf - string
+        -   about - text
+        -   userId
+        -   type - string
+        -   meta - inteiro
+        -   valueOne - decimal
+        -   valueFive - decimal
+        -   valueTen - decimal
 
 ## Instruments
 
@@ -76,7 +93,7 @@
 -   GET
     -   /reviews
     -   /reviews/:id
-    -   /reviews/:id/getTeacher - busca todas as avaliações do professor de :id
+    -   /reviews/:id/teachers - busca todas as avaliações do professor de :id
 -   POST
     -   /reviews
         -   scheduleId
@@ -108,3 +125,22 @@
         -   street - text
         -   number - text
         -   zipcode - text
+
+## Certifieds
+
+-   GET
+    -   /certifieds
+    -   /certifieds/:id
+    -   /certifieds/:id/teachers - busca todos os certificados do professor de :id
+-   POST
+    -   /certifieds
+        -   title - string
+        -   path - string
+        -   teacherId - inteiro
+-   PUT
+    -   /certifieds/:id
+        -   title
+        -   path
+        -   teacherId
+-   DELETE
+    -   /certifieds/:id

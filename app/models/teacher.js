@@ -1,5 +1,3 @@
-const { genSaltSync, hashSync, compareSync } = require("bcryptjs");
-
 module.exports = (sequelize, DataTypes) => {
     const Teacher = sequelize.define('Teacher', {
         id: {
@@ -23,17 +21,17 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
-        password: {
+        birthday: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
+        },
+        cep: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
-        },
-        birthday: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            defaultValue: null
         },
         state: {
             type: DataTypes.STRING,
@@ -55,9 +53,37 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
+        about: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            defaultValue: null
+        },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references : {
+                model: 'user',
+                key: 'id'
+            },
+            onDelete: 'CASCADE'
+        },
+        type: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
         balance: {
             type: DataTypes.DECIMAL,
             defaultValue: '0'
+        },
+        meta: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         },
         valueOne: DataTypes.DECIMAL,
         valueFive: DataTypes.DECIMAL,
@@ -68,10 +94,7 @@ module.exports = (sequelize, DataTypes) => {
 
         },
         hooks: {
-            beforeCreate: (user, options) => {
-                const salt = genSaltSync();
-                user.password = hashSync(user.password, salt);
-            }
+
         },
         timestamp: true,
         paranoid: true
@@ -84,10 +107,10 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'teacherId',
             otherKey: 'instrumentId'
         });
-    };
-    
-    Teacher.prototype.isPassword = (encodedPassword, password) => {
-        return compareSync(password, encodedPassword);
+        Teacher.belongsTo(models.User, {
+            as: 'users',
+            foreignKey: 'userId'
+        });
     };
 
     return Teacher;

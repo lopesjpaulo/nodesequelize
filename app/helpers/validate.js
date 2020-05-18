@@ -17,6 +17,36 @@ module.exports = method => {
                     .isEmpty()
             ];
         }
+        case "teacher": {
+            return [
+                check("name")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("cpf")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("email")
+                    .exists()
+                    .isEmail(),
+                check("phone")
+                    .not()
+                    .isEmpty(),
+                check("cep")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("type")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("valueOne")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+            ];
+        }
         case "login": {
             return [
                 check("email")
@@ -73,6 +103,22 @@ module.exports = method => {
                     .exists()
                     .isISO8601(),
                 check("scheduleId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
+        case "certified": {
+            return [
+                check("title")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("path")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("teacherId")
                     .exists()
                     .not()
                     .isEmpty()

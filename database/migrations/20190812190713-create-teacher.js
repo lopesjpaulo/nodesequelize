@@ -23,10 +23,6 @@ module.exports = {
         type: DataTypes.STRING(10),
         allowNull: true
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       phone: {
         type: DataTypes.STRING(15),
         allowNull: true,
