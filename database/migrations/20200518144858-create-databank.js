@@ -25,11 +25,11 @@ module.exports = {
           type: DataTypes.STRING,
           allowNull: false
         },
-        userId: {
+        teacherId: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
-            model: 'Users',
+            model: 'Teachers',
             key: 'id'
           }
         },

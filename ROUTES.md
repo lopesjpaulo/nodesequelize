@@ -146,3 +146,26 @@
         -   teacherId
 -   DELETE
     -   /certifieds/:id
+
+## Databanks
+
+-   GET
+    -   /databanks
+    -   /databanks/:id
+    -   /databanks/:id/teachers - busca todas as contas cadastradas do professor de :id
+-   POST
+    -   /databanks
+        -   bank - string
+        -   agency - string
+        -   account - string
+        -   digit - string
+        -   teacherId - inteiro
+-   PUT
+    -   /databanks/:id
+        -   bank - string
+        -   agency - string
+        -   account - string
+        -   digit - string
+        -   teacherId - inteiro
+-   DELETE
+    -   /databanks/:id

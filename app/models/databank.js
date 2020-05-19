@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
             notEmpty: true
         }
       },
-      userId: {
+      teacherId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references : {
-            model: 'user',
+            model: 'teacher',
             key: 'id'
         },
         onDelete: 'CASCADE'
@@ -56,9 +56,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Databank.associate = function(models) {
-      Databank.belongsTo(models.Databank, {
-          as: 'users',
-          foreignKey: 'userId'
+      Databank.belongsTo(models.Teacher, {
+          as: 'teachers',
+          foreignKey: 'teacherId'
       });
   };
 

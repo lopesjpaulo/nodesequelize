@@ -128,6 +128,30 @@ module.exports = method => {
                     .isEmpty()
             ];
         }
+        case "databank": {
+            return [
+                check("bank")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("agency")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("account")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("digit")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("teacherId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
     }
 };
 

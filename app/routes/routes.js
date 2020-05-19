@@ -7,6 +7,7 @@ const ScheduleController = require("../controllers/ScheduleController");
 const ReviewController = require("../controllers/ReviewController");
 const PaymentController = require("../controllers/PaymentController");
 const CertifiedController = require("../controllers/CertifiedController");
+const DatabankController = require("../controllers/DatabankController");
 const validate = require("../helpers/validate");
 const verifyJWT = require("../middlewares/verifyJWT");
 
@@ -76,5 +77,14 @@ routes.get("/certifieds/:id/teachers", CertifiedController.getTeacher);
 routes.post("/certifieds", validate("certified"), CertifiedController.store);
 routes.put("/certifieds/:id", CertifiedController.update);
 routes.delete("/certifieds/:id", CertifiedController.destroy);
+
+/* Rotas de dados bancários */
+
+routes.get("/databanks", DatabankController.index);
+routes.get("/databanks/:id", DatabankController.show);
+routes.get("/databanks/:id/teachers", DatabankController.getTeacher);
+routes.post("/databanks", validate("databank"), DatabankController.store);
+routes.put("/databanks/:id", DatabankController.update);
+routes.delete("/databanks/:id", DatabankController.destroy);
 
 module.exports = routes;
