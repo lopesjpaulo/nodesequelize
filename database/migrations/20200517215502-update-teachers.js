@@ -13,14 +13,6 @@ module.exports = {
       ),
       queryInterface.addColumn(
         'Teachers', 
-        'about', 
-        {
-          type: DataTypes.TEXT,
-          allowNull: true
-        }
-      ),
-      queryInterface.addColumn(
-        'Teachers', 
         'type', 
         {
           type: DataTypes.STRING,
@@ -56,10 +48,6 @@ module.exports = {
       queryInterface.removeColumn(
         'Teachers',
         'cep'
-      ),
-      queryInterface.removeColumn(
-        'Teachers',
-        'about'
       ),
       queryInterface.removeColumn(
         'Teachers',
