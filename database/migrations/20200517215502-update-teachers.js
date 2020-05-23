@@ -4,24 +4,24 @@ module.exports = {
   up: (queryInterface, DataTypes) => {
     return Promise.all([
       queryInterface.addColumn(
-        'Teachers', 
-        'cep', 
+        'Teachers',
+        'cep',
         {
           type: DataTypes.STRING,
           allowNull: false
         }
       ),
       queryInterface.addColumn(
-        'Teachers', 
-        'type', 
+        'Teachers',
+        'type',
         {
           type: DataTypes.STRING,
           allowNull: false
         }
       ),
       queryInterface.addColumn(
-        'Teachers', 
-        'userId', 
+        'Teachers',
+        'userId',
         {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -32,14 +32,14 @@ module.exports = {
         }
       ),
       queryInterface.addColumn(
-        'Teachers', 
-        'meta', 
+        'Teachers',
+        'meta',
         {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: true
         }
       ),
-    ]) 
+    ])
 
   },
 

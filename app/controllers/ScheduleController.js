@@ -28,6 +28,11 @@ class ScheduleController{
                         model: models.User,
                         as: 'users',
                         attributes: ['id', 'name', 'email']
+                    },
+                    {
+                        model: models.Instrument,
+                        as: 'instruments',
+                        attributes: ['id', 'title']
                     }
                 ],
             });
@@ -90,6 +95,7 @@ class ScheduleController{
             const schedule = await models.Schedule.create({
                 avaliabilityId: req.body.avaliabilityId,
                 userId: req.userId,
+                instrumentId: req.body.instrumentId,
             });
             await models.Avaliability.update(
                 { busy: 1},

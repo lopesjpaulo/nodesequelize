@@ -82,6 +82,10 @@ module.exports = method => {
                 check("userId")
                     .exists()
                     .not()
+                    .isEmpty(),
+                check("instrumentId")
+                    .exists()
+                    .not()
                     .isEmpty()
             ];
         }
