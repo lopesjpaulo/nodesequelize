@@ -37,6 +37,18 @@ module.exports = (sequelize, DataTypes) => {
         finishedAt: {
           type: DataTypes.DATE,
           allowNull: true
+        },
+        canceledAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        canceled: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        rescheduled: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         }
     },{
         classMethods: {

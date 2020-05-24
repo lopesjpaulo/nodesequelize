@@ -53,6 +53,7 @@ routes.get("/schedules", verifyJWT, ScheduleController.index);
 routes.get("/schedules/:id", verifyJWT, ScheduleController.show);
 routes.post("/schedules", [verifyJWT, validate("schedule")], ScheduleController.store);
 routes.put("/schedules/:id", verifyJWT, ScheduleController.update);
+routes.put("/schedules/cancel/:id", verifyJWT, ScheduleController.cancel);
 routes.delete("/schedules/:id", verifyJWT, ScheduleController.destroy);
 
 /* Rotas de avaliações */

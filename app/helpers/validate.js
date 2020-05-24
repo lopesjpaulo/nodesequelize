@@ -79,10 +79,6 @@ module.exports = method => {
                     .exists()
                     .not()
                     .isEmpty(),
-                check("userId")
-                    .exists()
-                    .not()
-                    .isEmpty(),
                 check("instrumentId")
                     .exists()
                     .not()
