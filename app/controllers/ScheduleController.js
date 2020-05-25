@@ -165,6 +165,51 @@ class ScheduleController{
         }
     }
 
+
+    static async check(req, res) {
+        try {
+            if(!req.params.id) return res.status(400).json();
+
+            const scheduleObject = await models.Schedule.findByPk(req.params.id, {attributes: ['id', 'avaliabilityId', 'finishedAt']});
+
+            if(!scheduleObject) return res.status(404).json();
+
+            const avaliabilityObject = await models.Avaliability.findOne({
+                where: { id: scheduleObject.avaliabilityId, date: { [Op.lte]: moment().utc(true).add(15, 'minutes').toDate() } }
+            });
+
+            if(!avaliabilityObject) return res.status(200).json({ valid: false,  msg: 'Aula perdida' });
+
+            const remaining = moment(avaliabilityObject['date']).diff(moment().utc(true), 'minutes');
+
+            return res.status(200).json({ valid: true, remaining });
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async checkClassTime(req, res) {
+        try {
+            if(!req.params.id) return res.status(400).json();
+
+            const scheduleObject = await models.Schedule.findByPk(req.params.id, {attributes: ['id', 'avaliabilityId', 'finishedAt']});
+
+            if(!scheduleObject) return res.status(404).json();
+
+            const avaliabilityObject = await models.Avaliability.findOne({
+                where: { id: scheduleObject.avaliabilityId, date: { [Op.lte]: moment().utc(true).add(15, 'minutes').toDate() } }
+            });
+
+            if(!avaliabilityObject) return res.status(200).json({ valid: false,  msg: 'Aula perdida' });
+
+            const remaining = moment(avaliabilityObject['date']).add(51, 'minutes').diff(moment().utc(true), 'minutes');
+
+            return res.status(200).json({ valid: true, remaining });
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
     static async update(req, res) {
         try {
             if(!req.params.id) return res.status(400).json();
