@@ -8,7 +8,7 @@ class ScheduleController{
     static async index(req, res) {
         try {
             const schedules = await models.Schedule.findAll({
-                attributes: ['id', 'canceled', 'rescheduled', 'canceledAt'],
+                attributes: ['id', 'canceled', 'rescheduled', 'canceledAt', 'finishedAt'],
                 order: [
                     [ 'avaliabilities', 'date', 'ASC' ]
                 ],
@@ -137,7 +137,7 @@ class ScheduleController{
             if(!scheduleObject) return res.status(404).json();
 
             const avaliabilityObject = await models.Avaliability.findOne({
-                where: { id: scheduleObject.avaliabilityId, date: { [Op.gt]: moment().utc(true).add(6, 'hours').toDate() } }
+                where: { id: scheduleObject.avaliabilityId, date: { [req.body.incall ? Op.lt : Op.gt]: moment().utc(true).add(req.body.incall ? 0 : 6, 'hours').toDate() } }
             });
 
             if(!avaliabilityObject) return res.status(404).json({ msg: 'Não disponivel para cancelamento' });
@@ -205,6 +205,27 @@ class ScheduleController{
             const remaining = moment(avaliabilityObject['date']).add(51, 'minutes').diff(moment().utc(true), 'minutes');
 
             return res.status(200).json({ valid: true, remaining });
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async finish(req, res) {
+        try {
+            if(!req.params.id) return res.status(400).json();
+
+            const scheduleObject = await models.Schedule.findByPk(req.params.id, {attributes: ['id', 'avaliabilityId', 'finishedAt']});
+
+            if(!scheduleObject) return res.status(404).json();
+
+            const schedule = await models.Schedule.update(
+                {
+                    finishedAt: moment().utc(true),
+                },
+                { where: { id: req.params.id }}
+            );
+
+            return res.status(200).json(schedule);
         } catch (error) {
             return res.status(500).json({error});
         }

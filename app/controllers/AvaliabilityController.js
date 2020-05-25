@@ -1,6 +1,7 @@
 const models = require("./../models/index")
 const { validationResult } = require('express-validator')
 const Sequelize = require('sequelize')
+const moment = require('moment');
 const Op = Sequelize.Op
 
 class AvaliabilityController{
@@ -11,7 +12,7 @@ class AvaliabilityController{
                     busy: 0,
                     teacherId: req.params.teacherId,
                     date: {
-                        [Op.gte]: Date.now()
+                        [Op.gte]: moment().utc(true).toDate()
                     }
                 }
             });
