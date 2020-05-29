@@ -132,13 +132,22 @@
         -   street - text
         -   number - text
         -   zipcode - text
-
     -   /payments/saveCard
         -   card_id - string
         -   digits - string
         -   expiration - string 
         -   brand - string
         -   userId - inteiro
+    -   /payments/saveAccount
+        -   bank - string
+            agency - string
+            agency_dig - string
+            account - string
+            digit - string
+            legal_name - string
+            cpf - string
+    -   /payments/saveReceiver
+        -   bank_account_id - string
 
 ## Certifieds
 
