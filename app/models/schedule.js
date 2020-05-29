@@ -25,16 +25,37 @@ module.exports = (sequelize, DataTypes) => {
           },
           onDelete: 'CASCADE'
         },
+        instrumentId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references : {
+                model: 'instrument',
+                key: 'id'
+            },
+            onDelete: 'CASCADE'
+        },
         finishedAt: {
           type: DataTypes.DATE,
           allowNull: true
+        },
+        canceledAt: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        canceled: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        rescheduled: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         }
     },{
         classMethods: {
 
         },
         hooks: {
-            
+
         },
         timestamp: true,
         paranoid: true
@@ -49,7 +70,11 @@ module.exports = (sequelize, DataTypes) => {
       as: 'users',
       foreignKey: 'userId'
     });
+      Schedule.belongsTo(models.Instrument, {
+          as: 'instruments',
+          foreignKey: 'instrumentId'
+      });
   };
-  
+
   return Schedule;
 };

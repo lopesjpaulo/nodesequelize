@@ -98,14 +98,7 @@ class PaymentController {
                 transfer_enabled: true,
                 transfer_interval: "weekly",
                 transfer_day: 5,
-                bank_account_id: req.body.bank_account_id,
-                register_information: {
-                    type: "individual",
-                    document_number: "07930839400",
-                    name: "Someone",
-                    site_url:"http://www.site.com",
-                    email: "some@email.com"
-                }
+                bank_account_id: req.body.bank_account_id
             });
             
             return res.status(200).json(receiver);
