@@ -41,19 +41,19 @@ module.exports = {
         unique:true
       },
       balance: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.DECIMAL(10, 2),
         defaultValue: '0'
       },
       valueOne: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.INTEGER(10),
         allowNull: true
       },
       valueFive: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.INTEGER(10),
         allowNull: true
       },
       valueTen: {
-        type: DataTypes.DECIMAL(10,2),
+        type: DataTypes.INTEGER(10),
         allowNull: true
       },
       createdAt: {

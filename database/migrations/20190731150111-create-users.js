@@ -14,20 +14,16 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false
       },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
       },
-      birthday: {
-        type: DataTypes.STRING(10),
-        allowNull: true
-      },
-      state: {
-        type: DataTypes.STRING(2),
-        allowNull: true
-      },
-      city: {
+      pathImage: {
         type: DataTypes.STRING,
         allowNull: true
       },

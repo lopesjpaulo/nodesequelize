@@ -8,6 +8,7 @@ const ReviewController = require("../controllers/ReviewController");
 const PaymentController = require("../controllers/PaymentController");
 const CertifiedController = require("../controllers/CertifiedController");
 const DatabankController = require("../controllers/DatabankController");
+const DatauserController = require("../controllers/DatauserController");
 const validate = require("../helpers/validate");
 const verifyJWT = require("../middlewares/verifyJWT");
 
@@ -68,6 +69,11 @@ routes.delete("/reviews/:id", ReviewController.destroy);
 routes.get("/payments", PaymentController.index);
 routes.get("/payments/:id", PaymentController.show);
 routes.post("/payments", validate("payment"), PaymentController.store);
+routes.post("/payments/saveCard", validate("saveCard"), PaymentController.saveCard);
+routes.post("/payments/saveAccount", PaymentController.saveAccount);
+routes.post("/payments/saveReceiver", PaymentController.saveReceiver);
+routes.post("/payments/saveCustomer", PaymentController.saveCustomer);
+routes.post("/payments/testStore", PaymentController.testStore);
 
 /* Rotas de certificados */
 
@@ -86,5 +92,14 @@ routes.get("/databanks/:id/teachers", DatabankController.getTeacher);
 routes.post("/databanks", validate("databank"), DatabankController.store);
 routes.put("/databanks/:id", DatabankController.update);
 routes.delete("/databanks/:id", DatabankController.destroy);
+
+/* Rotas de dados dos usuários*/
+
+routes.get("/datausers", DatauserController.index);
+routes.get("/datausers/:id", DatauserController.show);
+routes.get("/datausers/:id/teachers", DatauserController.getUser);
+routes.post("/datausers", DatauserController.store);
+routes.put("/datausers/:id", DatauserController.update);
+routes.delete("/datausers/:id", DatauserController.destroy);
 
 module.exports = routes;

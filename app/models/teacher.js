@@ -85,9 +85,9 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
-        valueOne: DataTypes.DECIMAL,
-        valueFive: DataTypes.DECIMAL,
-        valueTen: DataTypes.DECIMAL
+        valueOne: DataTypes.INTEGER,
+        valueFive: DataTypes.INTEGER,
+        valueTen: DataTypes.INTEGER
     },
     {   
         classMethods: {

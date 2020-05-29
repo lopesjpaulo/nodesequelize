@@ -116,17 +116,29 @@
     -   /payments/:id
 -   POST
     -   /payments
-        -   paidAt - formato: 2019-09-26 14:00:00
         -   scheduleId - inteiro
-        -   typeDocument - "rg", "cpf"
-        -   numberDocument - text
-        -   country - text "br"
+        -   card_id - string
+        -   customer_name - string
+        -   customer_country - string "br"
+        -   email - string
+        -   cpf - string
+        -   phone - string
+        -   birthday - string
+        -   billing_name - string
+        -   billing_country - text "br"
         -   state - text "RN"
         -   city - text
         -   bairro - text
         -   street - text
         -   number - text
         -   zipcode - text
+
+    -   /payments/saveCard
+        -   card_id - string
+        -   digits - string
+        -   expiration - string 
+        -   brand - string
+        -   userId - inteiro
 
 ## Certifieds
 
@@ -167,5 +179,28 @@
         -   account - string
         -   digit - string
         -   teacherId - inteiro
+-   DELETE
+    -   /databanks/:id
+
+## Datausers
+
+-   GET
+    -   /datausers
+    -   /datausers/:id
+    -   /datausers/:id/users - busca todas as contas cadastradas do usuário de :id 
+-   POST
+    -   /datausers
+        -   birthday - string
+        -   cpf - string
+        -   phone - string
+        -   cep - string
+        -   street - string
+        -   number - string
+        -   bairro - string
+        -   city - string
+        -   state - string    
+        -   country - string    
+        -   userId - inteiro    
+        -   customer_id - string    
 -   DELETE
     -   /databanks/:id

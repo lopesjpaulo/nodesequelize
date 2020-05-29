@@ -103,10 +103,31 @@ module.exports = method => {
         }
         case "payment": {
             return [
-                check("paidAt")
-                    .exists()
-                    .isISO8601(),
                 check("scheduleId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
+        case "saveCard": {
+            return [
+                check("card_id")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("digits")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("expiration")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("brand")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("userId")
                     .exists()
                     .not()
                     .isEmpty()
