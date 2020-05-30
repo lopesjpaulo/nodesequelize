@@ -75,10 +75,10 @@ routes.get("/payments", verifyJWT, PaymentController.index);
 routes.get("/payments/:id", verifyJWT, PaymentController.show);
 routes.post("/payments", [verifyJWT, validate("payment")], PaymentController.store);
 routes.post("/payments/saveCard", [verifyJWT, validate("saveCard")], PaymentController.saveCard);
-routes.post("/payments/saveAccount", verifyJWT, PaymentController.saveAccount);
-routes.post("/payments/saveReceiver", verifyJWT, PaymentController.saveReceiver);
-routes.post("/payments/saveCustomer", verifyJWT, PaymentController.saveCustomer);
-routes.post("/payments/testStore", verifyJWT, PaymentController.testStore);
+routes.post("/payments/saveAccount", [verifyJWT, validate("saveAccount")], PaymentController.saveAccount);
+routes.post("/payments/saveReceiver", [verifyJWT, validate("saveReceiver")], PaymentController.saveReceiver);
+routes.post("/payments/saveCustomer", [verifyJWT, validate("saveCustomer")], PaymentController.saveCustomer);
+//routes.post("/payments/testStore", verifyJWT, PaymentController.testStore);
 
 /* Rotas de certificados */
 

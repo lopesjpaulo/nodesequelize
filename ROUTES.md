@@ -10,7 +10,7 @@
         -   name
         -   lastname
         -   email
-        -   birthday
+        -   birthday - "1965-01-01"
         -   state
         -   city
         -   password
@@ -34,8 +34,8 @@
     -   /teachers
         -   name
         -   email
-        -   birthday
-        -   phone
+        -   birthday - "1965-01-01"
+        -   phone - +5511999991111
         -   cep
         -   state
         -   city
@@ -122,8 +122,8 @@
         -   customer_country - string "br"
         -   email - string
         -   cpf - string
-        -   phone - string
-        -   birthday - string
+        -   phone - string - +5511999991111
+        -   birthday - string - "1965-01-01"
         -   billing_name - string
         -   billing_country - text "br"
         -   state - text "RN"
@@ -148,6 +148,14 @@
             cpf - string
     -   /payments/saveReceiver
         -   bank_account_id - string
+    -   /payments/saveCustomer
+        -   id - string
+        -   name - string
+        -   country - string - 'br'
+        -   email - string
+        -   cpf - string
+        -   phone - string - +5511999991111
+        -   birthday - string - "1965-01-01"
 
 ## Certifieds
 
@@ -199,9 +207,9 @@
     -   /datausers/:id/users - busca todas as contas cadastradas do usuário de :id 
 -   POST
     -   /datausers
-        -   birthday - string
+        -   birthday - string - "1965-01-01"
         -   cpf - string
-        -   phone - string
+        -   phone - string - +5511999991111
         -   cep - string
         -   street - string
         -   number - string

@@ -123,34 +123,36 @@ class PaymentController {
     }
 
     static async saveCustomer(req, res) {
-        //const errors = validationResult(req);
+        const errors = validationResult(req);
 
-        //if (!errors.isEmpty())
-            //return res.status(422).json({ errors: errors.array() });
+        if (!errors.isEmpty())
+            return res.status(422).json({ errors: errors.array() });
 
             const client = await pagarme.client.connect({
                 api_key: process.env.PAGARME_API_KEY
             });
-            
-            const customer = client.customers.create({
-                external_id: '#12345d789',
-                name: 'João das Neves',
+
+        try{
+            const customer = await client.customers.create({
+                external_id: req.body.id,
+                name: req.body.name,
                 type: 'individual',
-                country: 'br',
-                email: 'joaoneves@norte.com',
+                country: req.body.country ? req.body.country : 'br',
+                email: req.body.email,
                 documents: [
-                  {
+                    {
                     type: 'cpf',
-                    number: '11111111111'
-                  }
+                    number: req.body.cpf
+                    }
                 ],
-                phone_numbers: ['+5511999999999', '+5511888888888'],
-                birthday: '1985-01-01'
-              })
+                phone_numbers: [req.body.phone],
+                birthday: req.body.birthday
+                })
 
             return res.status(200).json(customer);
-
-            const datacard = await models.Datacard.create(req.body);
+        } catch (error) {
+            return res.status(500).json({ error });
+        }
     }
 
     /*processPayment(amount, schedule, datauser, req) {
@@ -215,7 +217,7 @@ class PaymentController {
         }
     }*/
 
-    static async testStore(req, res) {
+    /*static async testStore(req, res) {
         const client = await pagarme.client.connect({
             api_key: process.env.PAGARME_API_KEY
         });
@@ -256,7 +258,7 @@ class PaymentController {
         } catch(error) {
             return res.status(500).json({ error });
         }   
-    }
+    }*/
 
     static async store(req, res) {
         const errors = validationResult(req);
@@ -309,9 +311,9 @@ class PaymentController {
                     postback_url: process.env.URL+'/postbackurl',
                     customer: {
                         external_id: schedule.id.toString(),
-                        name: req.body.customer_name,
+                        name: req.body.name,
                         type: "individual",
-                        country: req.body.customer_country ? req.body.customer_country : datauser.country,
+                        country: req.body.customer_country ? req.body.customer_country : 'br',
                         email: req.body.email ? req.body.email : datauser.email,
                         documents: [
                           {
@@ -322,7 +324,7 @@ class PaymentController {
                         phone_numbers: req.body.phone ? [req.body.phone] : [datauser.phone],
                         birthday: req.body.birthday ? req.body.birthday : datauser.birthday
                       },
-                    billing: {
+                    /*billing: {
                         name: req.body.billing_name,
                         address: {
                             country: req.body.billing_country ? req.body.billing_country : datauser.country,
@@ -333,7 +335,7 @@ class PaymentController {
                             street_number: req.body.number ? req.body.number : datauser.number,
                             zipcode: req.body.zipcode ? req.body.zipcode : datauser.cep
                         }
-                    },
+                    },*/
                     items: [
                         {
                             id: schedule.id.toString(),

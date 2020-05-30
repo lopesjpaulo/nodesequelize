@@ -106,7 +106,15 @@ module.exports = method => {
                 check("scheduleId")
                     .exists()
                     .not()
-                    .isEmpty()
+                    .isEmpty(),
+                check("card_id")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("name")
+                    .exists()
+                    .not()
+                    .isEmpty()  
             ];
         }
         case "saveCard": {
@@ -128,6 +136,66 @@ module.exports = method => {
                     .not()
                     .isEmpty(),
                 check("userId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
+        case "saveAccount": {
+            return [
+                check("bank")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("agency")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("account")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("legal_name")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("cpf")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
+        case "saveReceiver": {
+            return [
+                check("bank_account_id")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
+        case "saveCustomer": {
+            return [
+                check("id")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("name")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("email")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("cpf")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("phone")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("birthday")
                     .exists()
                     .not()
                     .isEmpty()
