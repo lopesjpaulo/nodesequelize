@@ -35,7 +35,7 @@ class DatauserController{
                       as: 'users',
                       attributes: ['id', 'name', 'lastname', 'email', 'pathImage']
                   }
-                ]   
+                ]
             });
 
             if(!datauser) return res.status(204).json();
@@ -49,13 +49,25 @@ class DatauserController{
     static async store(req, res) {
         const errors = validationResult(req);
 
-        if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+        if(!errors.isEmpty()) {
+            await models.User.destroy({
+                where:{
+                    id: req.body.userId
+                }
+            });
+            return res.status(422).json({ errors: errors.array() });
+        }
 
         try{
             const datauser = await models.Datauser.create(req.body);
 
             return res.status(200).json(datauser);
         }catch (error){
+            await models.User.destroy({
+                where:{
+                    id: req.body.userId
+                }
+            });
             return res.status(500).json({error});
         }
     }

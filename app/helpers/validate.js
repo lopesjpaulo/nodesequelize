@@ -111,10 +111,6 @@ module.exports = method => {
                     .exists()
                     .not()
                     .isEmpty(),
-                check("name")
-                    .exists()
-                    .not()
-                    .isEmpty()  
             ];
         }
         case "saveCard": {
@@ -135,10 +131,6 @@ module.exports = method => {
                     .exists()
                     .not()
                     .isEmpty(),
-                check("userId")
-                    .exists()
-                    .not()
-                    .isEmpty()
             ];
         }
         case "saveAccount": {

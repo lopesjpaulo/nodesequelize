@@ -3,6 +3,7 @@ require('dotenv-safe').config;
 const { validationResult } = require("express-validator");
 const Sequelize = require("sequelize");
 const pagarme = require("pagarme");
+const moment = require('moment');
 const Op = Sequelize.Op;
 
 class PaymentController {
@@ -80,12 +81,12 @@ class PaymentController {
                 legal_name: req.body.legal_name,
                 document_number: req.body.cpf
             });
-    
+
             return res.status(200).json(account);
 
         } catch (error) {
             return res.status(500).json({ error });
-        } 
+        }
     }
 
     static async saveReceiver(req, res) {
@@ -100,7 +101,7 @@ class PaymentController {
                 transfer_day: 5,
                 bank_account_id: req.body.bank_account_id
             });
-            
+
             return res.status(200).json(receiver);
         } catch (error) {
             return res.status(500).json({error});
@@ -114,9 +115,9 @@ class PaymentController {
             return res.status(422).json({ errors: errors.array() });
 
         try{
-            const datacard = await models.Datacard.create(req.body);
+            const datacard = await models.Datacard.create({...req.body, userId: req.userId});
 
-            return res.status(200).json(datacard); 
+            return res.status(200).json(datacard);
         } catch (error) {
             return res.status(500).json({ error });
         }
@@ -253,11 +254,11 @@ class PaymentController {
                     }
                 ]
             });
-    
+
             return res.status(200).json(transaction);
         } catch(error) {
             return res.status(500).json({ error });
-        }   
+        }
     }*/
 
     static async store(req, res) {
@@ -294,6 +295,8 @@ class PaymentController {
             where: { userId: schedule.userId }
         });
 
+        const user = await models.User.findByPk(schedule.userId);
+
         if (schedule.finishedAt !== null) {
             return res.status(409).json("Horário já ocupado!");
         } else {
@@ -306,36 +309,26 @@ class PaymentController {
 
                 transaction = await client.transactions.create({
                     amount: (amount * 100),
+                    async: false,
                     payment_method: "credit_card",
                     card_id: req.body.card_id,
-                    postback_url: process.env.URL+'/postbackurl',
                     customer: {
                         external_id: schedule.id.toString(),
-                        name: req.body.name,
+                        name: user.name + ' ' + user.lastname,
                         type: "individual",
-                        country: req.body.customer_country ? req.body.customer_country : 'br',
-                        email: req.body.email ? req.body.email : datauser.email,
+                        country: 'br',
+                        email: req.body.email ? req.body.email : user.email,
                         documents: [
                           {
                             type: "cpf",
                             number: req.body.cpf ? req.body.cpf : datauser.cpf
                           }
                         ],
-                        phone_numbers: req.body.phone ? [req.body.phone] : [datauser.phone],
-                        birthday: req.body.birthday ? req.body.birthday : datauser.birthday
+                        phone_numbers: req.body.phone ? ['+55' + req.body.phone] : ['+55' + datauser.phone],
+                        birthday: req.body.birthday ?
+                            moment(req.body.birthday, "DD/MM/YYYY").format("YYYY-MM-DD") :
+                            moment(datauser.birthday, "DD/MM/YYYY").format("YYYY-MM-DD")
                       },
-                    /*billing: {
-                        name: req.body.billing_name,
-                        address: {
-                            country: req.body.billing_country ? req.body.billing_country : datauser.country,
-                            state: req.body.state ? req.body.state : datauser.state,
-                            city: req.body.city ? req.body.city : datauser.city,
-                            neighborhood: req.body.bairro ? req.body.bairro : datauser.bairro,
-                            street: req.body.street ? req.body.street : datauser.street,
-                            street_number: req.body.number ? req.body.number : datauser.number,
-                            zipcode: req.body.zipcode ? req.body.zipcode : datauser.cep
-                        }
-                    },*/
                     items: [
                         {
                             id: schedule.id.toString(),
@@ -350,9 +343,21 @@ class PaymentController {
                 });
 
             } catch (error) {
-                return res.status(500).json({ error });
+                const avaliabilityCancel = await models.Avaliability.update(
+                    {
+                        busy: 0,
+                    },
+                    { where: { id: schedule.avaliabilityId }}
+                );
+
+                const scheduleCancel = await models.Schedule.destroy({
+                    where:{
+                        id: schedule.id
+                    }
+                });
+                return res.status(500).json({ error});
             }
-    
+
             if (transaction.status == "paid") {
                 try {
                     const payment = models.Payment.create({
@@ -360,12 +365,36 @@ class PaymentController {
                         scheduleId: schedule.id,
                         transcation_id: transaction.id
                     });
-                    return res.status(200).json(payment);
+                    return res.status(200).json({ paid: true, payment });
                 } catch (error) {
+                    const avaliabilityCancel = await models.Avaliability.update(
+                        {
+                            busy: 0,
+                        },
+                        { where: { id: schedule.avaliabilityId }}
+                    );
+
+                    const scheduleCancel = await models.Schedule.destroy({
+                        where:{
+                            id: schedule.id
+                        }
+                    });
                     return res.status(500).json({ error });
                 }
             } else {
-                return res.status(400).json(transaction);
+                const avaliabilityCancel = await models.Avaliability.update(
+                    {
+                        busy: 0,
+                    },
+                    { where: { id: schedule.avaliabilityId }}
+                );
+
+                const scheduleCancel = await models.Schedule.destroy({
+                    where:{
+                        id: schedule.id
+                    }
+                });
+                return res.status(200).json({ paid: false, transaction });
             }
         }
     }
