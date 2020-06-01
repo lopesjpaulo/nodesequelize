@@ -30,21 +30,6 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
-        birthday: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            defaultValue: null
-        },
-        state: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            defaultValue: null
-        },
-        city: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            defaultValue: null
-        },
         password: {
             type: DataTypes.STRING,
             allowNull: false,

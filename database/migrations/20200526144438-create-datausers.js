@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('Datausers', { 
+    return queryInterface.createTable('Datausers', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -24,31 +24,31 @@ module.exports = {
       },
       cep: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       street: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       number: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       bairro: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       state: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       country: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -71,7 +71,7 @@ module.exports = {
         allowNull: true
       }
     });
-    
+
   },
 
   down: (queryInterface, Sequelize) => {

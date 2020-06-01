@@ -29,52 +29,31 @@ module.exports = (sequelize, DataTypes) => {
       },
       cep: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
       },
       street: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
       },
       number: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
       },
       bairro: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
       },
       state: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
       },
       country: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+        allowNull: true,
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -85,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
   },
-  {   
+  {
       classMethods: {
 
       },
