@@ -85,6 +85,9 @@ class AvaliabilityController{
                         as: 'teachers',
                         attributes: ['name', 'valueOne', 'valueFive', 'valueTen']
                     }
+                ],
+                order: [
+                    ['date', 'ASC']
                 ]
             });
 
