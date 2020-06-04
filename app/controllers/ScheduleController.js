@@ -8,10 +8,11 @@ class ScheduleController{
     static async index(req, res) {
         try {
             const schedules = await models.Schedule.findAll({
-                attributes: ['id', 'canceled', 'rescheduled', 'canceledAt', 'finishedAt'],
+                attributes: ['id', 'canceled', 'rescheduled', 'canceledAt', 'finishedAt', 'userId'],
                 order: [
                     [ 'avaliabilities', 'date', 'ASC' ]
                 ],
+                where: [{ userId: req.userId } ],
                 include: [
                     {
                         model: models.Avaliability,
@@ -137,7 +138,7 @@ class ScheduleController{
             if(!scheduleObject) return res.status(404).json();
 
             const avaliabilityObject = await models.Avaliability.findOne({
-                where: { id: scheduleObject.avaliabilityId, date: { [req.body.incall ? Op.lt : Op.gt]: moment().utc(true).add(req.body.incall ? 0 : 6, 'hours').toDate() } }
+                where: { id: scheduleObject.avaliabilityId, date: { [Op.gt]: moment().utc(true).add(req.body.incall ? 0 : 6, 'hours').toDate() } }
             });
 
             if(!avaliabilityObject) return res.status(404).json({ msg: 'Não disponivel para cancelamento' });

@@ -123,6 +123,36 @@ class PaymentController {
         }
     }
 
+    static async listCards(req, res) {
+        try {
+            const cards = await models.Datacard.findAll({
+                where: [{ userId: req.userId } ],
+            });
+
+            if(!cards) return res.status(204).json();
+
+            return res.status(200).json(cards);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async destroyCard(req, res) {
+        try {
+            const card = await models.Datacard.destroy({
+                where:{
+                    id: req.params.id
+                }
+            });
+
+            if(!card) return res.status(400).json();
+
+            return res.status(200).json(card);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
     static async saveCustomer(req, res) {
         const errors = validationResult(req);
 
@@ -274,7 +304,7 @@ class PaymentController {
                 {
                     model: models.Avaliability,
                     as: "avaliabilities",
-                    attributes: ["id"],
+                    attributes: ["id", "date"],
                     include: [
                         {
                             model: models.Teacher,
@@ -365,7 +395,7 @@ class PaymentController {
                         scheduleId: schedule.id,
                         transcation_id: transaction.id
                     });
-                    return res.status(200).json({ paid: true, payment });
+                    return res.status(200).json({ paid: true, transaction, schedule });
                 } catch (error) {
                     const avaliabilityCancel = await models.Avaliability.update(
                         {
