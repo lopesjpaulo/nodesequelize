@@ -42,12 +42,12 @@ routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeach
 
 /* Rotas de disponibilidades */
 
-routes.get("/avaliabilities/:teacherId", verifyJWT, AvaliabilityController.index);
-routes.get("/avaliabilities/:id", verifyJWT, AvaliabilityController.show);
-routes.post("/avaliabilities", [verifyJWT, validate("avaliability")], AvaliabilityController.store);
-routes.post("/avaliabilities/available", verifyJWT, AvaliabilityController.available);
-routes.put("/avaliabilities/:id", verifyJWT, AvaliabilityController.update);
-routes.delete("/avaliabilities/:id", verifyJWT, AvaliabilityController.destroy);
+routes.get("/avaliabilities/:teacherId",AvaliabilityController.index);
+routes.get("/avaliabilities/:id",AvaliabilityController.show);
+routes.post("/avaliabilities", [validate("avaliability")], AvaliabilityController.store);
+routes.post("/avaliabilities/available", AvaliabilityController.available);
+routes.put("/avaliabilities/:id", AvaliabilityController.update);
+routes.delete("/avaliabilities/:id", AvaliabilityController.destroy);
 
 /* Rotas de agendamento */
 

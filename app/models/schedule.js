@@ -70,10 +70,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'users',
       foreignKey: 'userId'
     });
-      Schedule.belongsTo(models.Instrument, {
-          as: 'instruments',
-          foreignKey: 'instrumentId'
-      });
   };
 
   return Schedule;

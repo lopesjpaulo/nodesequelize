@@ -5,6 +5,11 @@ const Op = Sequelize.Op;
 
 class TeacherController{
     static async index(req, res) {
+        const { page } = req.query;
+
+        const pagination = page ? page : 1;
+        const limit = 10;
+
         try {
             const teachers = await models.Teacher.findAll({
                 attributes: ['id', 'name', 'email', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'valueFive', 'valueTen', 'type'],
@@ -14,7 +19,10 @@ class TeacherController{
                         as: 'instruments',
                         attributes: ['id', 'title']
                     }
-                ]
+                ],
+                limit: limit,
+                offset: ((pagination-1)*limit),
+                subQuery: false
             });
 
             if(!teachers) return res.status(204).json();
