@@ -32,6 +32,7 @@ routes.delete("/users/:id", verifyJWT, UserController.destroy);
 routes.get("/teachers", verifyJWT, TeacherController.index);
 routes.get("/teachers/:id", verifyJWT, TeacherController.show);
 routes.post("/teachers", [verifyJWT, validate("teacher")], TeacherController.store);
+routes.get("/teachers/classes/:id", verifyJWT, TeacherController.countClasses);
 
 /* Rotas de instrumentos */
 
