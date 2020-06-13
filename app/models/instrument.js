@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: 'CASCADE'
         }
     },
-    {   
+    {
         classMethods: {
 
         },
         hooks: {
-            
+
         },
         timestamp: true,
         paranoid: true
@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         Instrument.belongsTo(models.Category, {
             as: 'categories',
             foreignKey: 'categoryId'
+        });
+        Instrument.hasMany(models.Schedule, {
+            as: 'schedules',
+            foreignKey: 'instrumentId'
         });
     };
 

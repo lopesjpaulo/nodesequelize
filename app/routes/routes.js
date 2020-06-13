@@ -42,12 +42,12 @@ routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeach
 
 /* Rotas de disponibilidades */
 
-routes.get("/avaliabilities/:teacherId",AvaliabilityController.index);
-routes.get("/avaliabilities/:id",AvaliabilityController.show);
-routes.post("/avaliabilities", [validate("avaliability")], AvaliabilityController.store);
-routes.post("/avaliabilities/available", AvaliabilityController.available);
-routes.put("/avaliabilities/:id", AvaliabilityController.update);
-routes.delete("/avaliabilities/:id", AvaliabilityController.destroy);
+routes.get("/avaliabilities/:teacherId", verifyJWT,AvaliabilityController.index);
+routes.get("/avaliabilities/:id", verifyJWT,AvaliabilityController.show);
+routes.post("/avaliabilities", [verifyJWT, validate("avaliability")], AvaliabilityController.store);
+routes.post("/avaliabilities/available", verifyJWT, AvaliabilityController.available);
+routes.put("/avaliabilities/:id", verifyJWT, AvaliabilityController.update);
+routes.delete("/avaliabilities/:id", verifyJWT, AvaliabilityController.destroy);
 
 /* Rotas de agendamento */
 
@@ -103,11 +103,11 @@ routes.delete("/databanks/:id", verifyJWT, DatabankController.destroy);
 
 /* Rotas de dados dos usuários*/
 
-routes.get("/datausers", DatauserController.index);
-routes.get("/datausers/:id", DatauserController.show);
-routes.get("/datausers/:id/teachers", DatauserController.getUser);
-routes.post("/datausers", DatauserController.store);
-routes.put("/datausers/:id", DatauserController.update);
-routes.delete("/datausers/:id", DatauserController.destroy);
+routes.get("/datausers", verifyJWT, DatauserController.index);
+routes.get("/datausers/:id", verifyJWT, DatauserController.show);
+routes.get("/datausers/:id/teachers", verifyJWT, DatauserController.getUser);
+routes.post("/datausers", verifyJWT, DatauserController.store);
+routes.put("/datausers", verifyJWT, DatauserController.update);
+routes.delete("/datausers/:id", verifyJWT, DatauserController.destroy);
 
 module.exports = routes;

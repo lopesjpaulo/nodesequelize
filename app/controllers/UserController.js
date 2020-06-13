@@ -78,13 +78,33 @@ class UserController{
 
             const password = user.isPassword(user.password, req.body.password);
 
-            if(!password) return res.status(200).json({ auth: false});
+            if(!password) return res.status(200).json({ auth: false });
+
+            let dataLogged = null;
+
+            const dataUser = await models.Datauser.findOne({
+                where: {
+                    userId: user.id
+                }
+            });
+
+            if (dataUser) {
+               dataLogged = dataUser;
+            } else {
+                dataLogged = await models.Teacher.findOne({
+                    where: {
+                        userId: user.id
+                    }
+                });
+
+                user['teacher'] = teacher;
+            }
 
             var token = jwt.sign({id: user.id}, process.env.SECRET, {
                 expiresIn: "30 days"
             });
 
-            return res.status(200).json({ auth: true, token: token , user: user});
+            return res.status(200).json({ auth: true, token: token , user: user, data: dataLogged});
         } catch (error) {
             return res.status(500).json({error});
         }

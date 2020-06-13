@@ -74,11 +74,9 @@ class DatauserController{
 
     static async update(req, res) {
         try {
-            if(!req.params.id) return res.status(400).json();
-
             const datauser = await models.Datauser.update(
                 req.body,
-                { where: { id: req.params.id }}
+                { where: { userId: req.userId }}
             );
 
             if(!datauser) return res.status(204).json();

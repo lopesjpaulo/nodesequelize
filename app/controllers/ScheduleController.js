@@ -17,6 +17,7 @@ class ScheduleController{
                     {
                         model: models.Avaliability,
                         as: 'avaliabilities',
+                        required: true,
                         attributes: ['id', 'date', 'busy', 'teacherId'],
                         include: [
                             {

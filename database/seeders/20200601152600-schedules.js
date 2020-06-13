@@ -6,24 +6,28 @@ module.exports = {
         {
           avaliabilityId: 1,
           userId: 1,
+          instrumentId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           avaliabilityId: 2,
           userId: 1,
+          instrumentId: 1,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           avaliabilityId: 5,
           userId: 2,
+          instrumentId: 2,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           avaliabilityId: 6,
           userId: 2,
+          instrumentId: 3,
           createdAt: new Date(),
           updatedAt: new Date()
         },
