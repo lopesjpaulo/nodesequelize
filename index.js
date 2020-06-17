@@ -1,11 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const routes = require('./app/routes/routes');
 const paginate = require('express-paginate');
 
 const PORT = 3000;
 const HOST = '0.0.0.0';
+const MODE = 'development';
+var routes = '';
+
+if(MODE === 'development') {
+    routes = require('./app/routes/routesdev');
+} else {
+    routes = require('./app/routes/routes');
+}
 
 const app = express();
 

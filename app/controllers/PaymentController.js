@@ -15,7 +15,7 @@ class PaymentController {
     static async index(req, res) {
         try {
             const payments = await models.Payment.findAll({
-                attributes: ["id", "paidAt"],
+                attributes: ["id", "paid_at"],
                 include: [
                     {
                         model: models.Schedule,
@@ -43,7 +43,7 @@ class PaymentController {
             if (!req.params.id) return res.status(400).json();
 
             const payment = await models.Payment.findByPk(req.params.id, {
-                attributes: ["id", "paidAt"],
+                attributes: ["id", "paid_at"],
                 include: [
                     {
                         model: models.Schedule,
