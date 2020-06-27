@@ -7,7 +7,15 @@ const Op = Sequelize.Op
 class AvaliabilityController{
     static async index(req, res) {
         try {
-            var avaliabilites = await models.Avaliability.findAll({});
+            var avaliabilites = await models.Avaliability.findAll({
+                include: [
+                    {
+                        model: models.Teacher,
+                        as: 'teachers',
+                        attributes: ['name', 'valueOne', 'valueFive', 'valueTen']
+                    }
+                ]
+            });
 
             for (var i = 0; i < avaliabilites.length; i++) {
                 var date = new Date(avaliabilites[i].date);
