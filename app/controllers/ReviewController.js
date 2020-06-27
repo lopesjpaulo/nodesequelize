@@ -7,7 +7,7 @@ class ReviewController{
     static async index(req, res) {
         try {
             const reviews = await models.Review.findAll({
-                attributes: ['id', 'rating', 'comment'],
+                attributes: ['id', 'rating', 'comment', 'createdAt'],
                 include: [
                     {
                         model: models.Schedule,
@@ -44,7 +44,7 @@ class ReviewController{
             if(!req.params.id) return res.status(400).json();
 
             const review = await models.Review.findByPk(req.params.id, {
-                attributes: ['id', 'rating', 'comment'],
+                attributes: ['id', 'rating', 'comment', 'createdAt'],
                 include: [
                     {
                         model: models.Schedule,
