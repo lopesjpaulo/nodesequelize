@@ -42,8 +42,9 @@ routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeach
 
 /* Rotas de disponibilidades */
 
-routes.get("/avaliabilities/:teacherId", verifyJWT,AvaliabilityController.index);
+routes.get("/avaliabilities/", verifyJWT,AvaliabilityController.index);
 routes.get("/avaliabilities/:id", verifyJWT,AvaliabilityController.show);
+routes.get("/avaliabilities/:teacherId/teachers", verifyJWT,AvaliabilityController.getTeacher);
 routes.post("/avaliabilities", [verifyJWT, validate("avaliability")], AvaliabilityController.store);
 routes.post("/avaliabilities/available", verifyJWT, AvaliabilityController.available);
 routes.put("/avaliabilities/:id", verifyJWT, AvaliabilityController.update);
@@ -53,6 +54,7 @@ routes.delete("/avaliabilities/:id", verifyJWT, AvaliabilityController.destroy);
 
 routes.get("/schedules", verifyJWT, ScheduleController.index);
 routes.get("/schedules/:id", verifyJWT, ScheduleController.show);
+routes.get("/schedules/:id/users", verifyJWT, ScheduleController.getUser);
 routes.post("/schedules", [verifyJWT, validate("schedule")], ScheduleController.store);
 routes.put("/schedules/:id", verifyJWT, ScheduleController.update);
 routes.put("/schedules/cancel/:id", verifyJWT, ScheduleController.cancel);

@@ -12,6 +12,55 @@ class ScheduleController{
                 order: [
                     [ 'avaliabilities', 'date', 'ASC' ]
                 ],
+                include: [
+                    {
+                        model: models.Avaliability,
+                        as: 'avaliabilities',
+                        required: true,
+                        attributes: ['id', 'date', 'busy', 'teacherId'],
+                        include: [
+                            {
+                                model: models.Teacher,
+                                as: 'teachers',
+                                attributes: ['id', 'name', 'email'],
+                                include: [
+                                    {
+                                        model: models.Instrument,
+                                        as: 'instruments',
+                                        attributes: ['id', 'title']
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        model: models.User,
+                        as: 'users',
+                        attributes: ['id', 'name', 'email']
+                    },
+                    {
+                        model: models.Instrument,
+                        as: 'instruments',
+                        attributes: ['id', 'title']
+                    }
+                ],
+            });
+
+            if(!schedules) return res.status(204).json();
+
+            return res.status(200).json(schedules);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async getUser(req, res) {
+        try {
+            const schedules = await models.Schedule.findAll({
+                attributes: ['id', 'canceled', 'rescheduled', 'canceledAt', 'finishedAt', 'userId'],
+                order: [
+                    [ 'avaliabilities', 'date', 'ASC' ]
+                ],
                 where: [{ userId: req.userId } ],
                 include: [
                     {

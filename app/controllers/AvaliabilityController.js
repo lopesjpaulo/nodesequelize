@@ -7,6 +7,29 @@ const Op = Sequelize.Op
 class AvaliabilityController{
     static async index(req, res) {
         try {
+            var avaliabilites = await models.Avaliability.findAll({});
+
+            for (var i = 0; i < avaliabilites.length; i++) {
+                var date = new Date(avaliabilites[i].date);
+                var datefull = date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-'+ ('0' + date.getDate()).slice(-2);
+                var time = date.getUTCHours()+':'+date.getUTCMinutes();
+
+                avaliabilites[i]['dataValues']['date'] = datefull;
+                avaliabilites[i]['dataValues']['time'] = time;
+
+                avaliabilites[i]['dataValues']['dateFull'] = date;
+            };
+
+            if(!avaliabilites) return res.status(204).json();
+
+            return res.status(200).json(avaliabilites);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async getTeacher(req, res) {
+        try {
             var avaliabilites = await models.Avaliability.findAll({
                 where: {
                     busy: 0,
