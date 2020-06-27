@@ -36,7 +36,7 @@ class ScheduleController{
                     {
                         model: models.User,
                         as: 'users',
-                        attributes: ['id', 'name', 'email']
+                        attributes: ['id', 'name', 'lastname', 'email']
                     },
                     {
                         model: models.Instrument,
@@ -86,7 +86,7 @@ class ScheduleController{
                     {
                         model: models.User,
                         as: 'users',
-                        attributes: ['id', 'name', 'email']
+                        attributes: ['id', 'name', 'lastname', 'email']
                     },
                     {
                         model: models.Instrument,

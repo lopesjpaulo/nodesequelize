@@ -25,6 +25,11 @@ class ReviewController{
                                         attributes: ['id', 'name', 'email']
                                     }
                                 ]
+                            },
+                            {
+                                model: models.User,
+                                as: 'users',
+                                attributes: ['id', 'name', 'lastname', 'email']
                             }
                         ]
                     }
@@ -64,6 +69,11 @@ class ReviewController{
                                 ]
                             }
                         ]
+                    },
+                    {
+                        model: models.User,
+                        as: 'users',
+                        attributes: ['id', 'name', 'lastname', 'email']
                     }
                 ]
             });
