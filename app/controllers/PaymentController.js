@@ -25,6 +25,13 @@ class PaymentController {
                             "avaliabilityId",
                             "userId",
                             "finishedAt"
+                        ],
+                        include: [
+                            {
+                                model: models.User,
+                                as: 'users',
+                                attributes: ['id', 'name', 'lastname', 'email']
+                            }
                         ]
                     }
                 ]
@@ -53,6 +60,13 @@ class PaymentController {
                             "avaliabilityId",
                             "userId",
                             "finishedAt"
+                        ],
+                        include: [
+                            {
+                                model: models.User,
+                                as: 'users',
+                                attributes: ['id', 'name', 'lastname', 'email']
+                            }
                         ]
                     }
                 ]
