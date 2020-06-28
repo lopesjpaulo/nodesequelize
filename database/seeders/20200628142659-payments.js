@@ -7,7 +7,7 @@ module.exports = {
       scheduleId: 1,
       transaction_id: '123456',
       createdAt: new Date(),
-      deletedAt: new Date()
+      updatedAt: new Date()
     }], {});
   },
 
