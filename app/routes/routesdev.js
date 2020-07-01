@@ -2,6 +2,7 @@ const express = require("express");
 const UserController = require("./../controllers/UserController");
 const TeacherController = require("./../controllers/TeacherController");
 const InstrumentController = require("./../controllers/InstrumentController");
+const CategoryController = require("./../controllers/CategoryController");
 const AvaliabilityController = require("./../controllers/AvaliabilityController");
 const ScheduleController = require("../controllers/ScheduleController");
 const ReviewController = require("../controllers/ReviewController");
@@ -29,6 +30,14 @@ routes.get("/teachers", TeacherController.index);
 routes.get("/teachers/:id", TeacherController.show);
 routes.post("/teachers", [validate("teacher")], TeacherController.store);
 routes.get("/teachers/classes/:id", TeacherController.countClasses);
+
+/* Rotas de Categorias */
+
+routes.get("/categories", CategoryController.index);
+routes.get("/categories/:id", CategoryController.show);
+routes.post("/categories", CategoryController.store);
+routes.put("/categories/:id", CategoryController.update);
+routes.delete("/categories/:id", CategoryController.destroy);
 
 /* Rotas de instrumentos */
 
