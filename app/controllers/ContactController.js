@@ -4,6 +4,60 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
 class ContactController{
+    static async index(req, res) {
+        try {
+            const contacts = await models.Contact.findAll({
+                attributes: ['id', 'subject', 'text'],
+                include: [
+                    {
+                        model: models.User,
+                        as: 'users',
+                        attributes: ['id', 'name', 'lastname']
+                    },
+                    {
+                        model: models.Schedule,
+                        as: 'schedules',
+                        attributes: ['id']
+                    }
+                ]
+            });
+
+            if(!contacts) return res.status(204).json();
+
+            return res.status(200).json(contacts);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async show(req, res){
+        try {
+            if(!req.params.id) return res.status(400).json();
+
+            const contact = await models.Contact.findByPk(req.params.id, {
+                attributes: ['id', 'subject', 'text'],
+                include: [
+                    {
+                        model: models.User,
+                        as: 'users',
+                        attributes: ['id', 'name', 'lastname']
+                    },
+                    {
+                        model: models.Schedule,
+                        as: 'schedules',
+                        attributes: ['id']
+                    }
+                ]
+            });
+
+            if(!contact) return res.status(204).json();
+
+            return res.status(200).json(contact)
+        } catch (error) {
+            return res.status(500).json(error);
+        }
+    }
+
     static async store(req, res) {
         const errors = validationResult(req);
 

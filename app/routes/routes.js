@@ -11,6 +11,7 @@ const CertifiedController = require("../controllers/CertifiedController");
 const DocumentController = require("../controllers/DocumentController");
 const DatabankController = require("../controllers/DatabankController");
 const DatauserController = require("../controllers/DatauserController");
+const ContactController = require("../controllers/ContactController");
 const validate = require("../helpers/validate");
 const verifyJWT = require("../middlewares/verifyJWT");
 
@@ -127,9 +128,19 @@ routes.delete("/databanks/:id", verifyJWT, DatabankController.destroy);
 
 routes.get("/datausers", verifyJWT, DatauserController.index);
 routes.get("/datausers/:id", verifyJWT, DatauserController.show);
-routes.get("/datausers/:id/teachers", verifyJWT, DatauserController.getUser);
+routes.get("/datausers/:id/users", verifyJWT, DatauserController.getUser);
 routes.post("/datausers", verifyJWT, DatauserController.store);
 routes.put("/datausers", verifyJWT, DatauserController.update);
 routes.delete("/datausers/:id", verifyJWT, DatauserController.destroy);
+
+/* Rotas de contato*/
+
+routes.get("/contacts", verifyJWT, ContactController.index);
+routes.get("/contacts/:id", verifyJWT, ContactController.show);
+routes.get("/contacts/:id/users", verifyJWT, ContactController.getUser);
+routes.get("/contacts/:id/schedules", verifyJWT, ContactController.getSchedule);
+routes.post("/contacts", verifyJWT, ContactController.store);
+routes.put("/contacts", verifyJWT, ContactController.update);
+routes.delete("/contacts/:id", verifyJWT, ContactController.destroy);
 
 module.exports = routes;

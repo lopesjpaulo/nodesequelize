@@ -11,6 +11,7 @@ const CertifiedController = require("../controllers/CertifiedController");
 const DocumentController = require("../controllers/DocumentController");
 const DatabankController = require("../controllers/DatabankController");
 const DatauserController = require("../controllers/DatauserController");
+const ContactController = require("../controllers/ContactController");
 const validate = require("../helpers/validate");
 
 const routes = express.Router();
@@ -123,9 +124,19 @@ routes.delete("/databanks/:id", DatabankController.destroy);
 
 routes.get("/datausers", DatauserController.index);
 routes.get("/datausers/:id", DatauserController.show);
-routes.get("/datausers/:id/teachers", DatauserController.getUser);
+routes.get("/datausers/:id/users", DatauserController.getUser);
 routes.post("/datausers", DatauserController.store);
 routes.put("/datausers", DatauserController.update);
 routes.delete("/datausers/:id", DatauserController.destroy);
+
+/* Rotas de contato*/
+
+routes.get("/contacts", ContactController.index);
+routes.get("/contacts/:id", ContactController.show);
+routes.get("/contacts/:id/users", ContactController.getUser);
+routes.get("/contacts/:id/schedules", ContactController.getSchedule);
+routes.post("/contacts", ContactController.store);
+routes.put("/contacts", ContactController.update);
+routes.delete("/contacts/:id", ContactController.destroy);
 
 module.exports = routes;
