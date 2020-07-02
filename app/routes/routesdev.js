@@ -8,6 +8,7 @@ const ScheduleController = require("../controllers/ScheduleController");
 const ReviewController = require("../controllers/ReviewController");
 const PaymentController = require("../controllers/PaymentController");
 const CertifiedController = require("../controllers/CertifiedController");
+const DocumentController = require("../controllers/DocumentController");
 const DatabankController = require("../controllers/DatabankController");
 const DatauserController = require("../controllers/DatauserController");
 const validate = require("../helpers/validate");
@@ -50,6 +51,7 @@ routes.get("/instruments/:id/teachers", InstrumentController.getTeacher);
 routes.get("/avaliabilities/", AvaliabilityController.index);
 routes.get("/avaliabilities/:teacherId/teachers", AvaliabilityController.getTeacher);
 routes.get("/avaliabilities/:id", AvaliabilityController.show);
+routes.get("/avaliabilities/date/:date", AvaliabilityController.getDate);
 routes.post("/avaliabilities", [validate("avaliability")], AvaliabilityController.store);
 routes.post("/avaliabilities/available", AvaliabilityController.available);
 routes.put("/avaliabilities/:id", AvaliabilityController.update);
@@ -98,6 +100,15 @@ routes.get("/certifieds/:id/teachers", CertifiedController.getTeacher);
 routes.post("/certifieds", [validate("certified")], CertifiedController.store);
 routes.put("/certifieds/:id", CertifiedController.update);
 routes.delete("/certifieds/:id", CertifiedController.destroy);
+
+/* Rotas de documentos*/
+
+routes.get("/documents", DocumentController.index);
+routes.get("/documents/:id", DocumentController.show);
+routes.get("/documents/:id/users", DocumentController.getUser);
+routes.post("/documents", [validate("document")], DocumentController.store);
+routes.put("/documents/:id", DocumentController.update);
+routes.delete("/documents/:id", DocumentController.destroy);
 
 /* Rotas de dados bancários */
 

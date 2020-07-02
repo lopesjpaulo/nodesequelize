@@ -8,6 +8,7 @@ const ScheduleController = require("../controllers/ScheduleController");
 const ReviewController = require("../controllers/ReviewController");
 const PaymentController = require("../controllers/PaymentController");
 const CertifiedController = require("../controllers/CertifiedController");
+const DocumentController = require("../controllers/DocumentController");
 const DatabankController = require("../controllers/DatabankController");
 const DatauserController = require("../controllers/DatauserController");
 const validate = require("../helpers/validate");
@@ -53,6 +54,7 @@ routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeach
 
 routes.get("/avaliabilities/", verifyJWT,AvaliabilityController.index);
 routes.get("/avaliabilities/:id", verifyJWT,AvaliabilityController.show);
+routes.get("/avaliabilities/date/:date", AvaliabilityController.getDate);
 routes.get("/avaliabilities/:teacherId/teachers", verifyJWT,AvaliabilityController.getTeacher);
 routes.post("/avaliabilities", [verifyJWT, validate("avaliability")], AvaliabilityController.store);
 routes.post("/avaliabilities/available", verifyJWT, AvaliabilityController.available);
@@ -102,6 +104,15 @@ routes.get("/certifieds/:id/teachers", verifyJWT, CertifiedController.getTeacher
 routes.post("/certifieds", [verifyJWT, validate("certified")], CertifiedController.store);
 routes.put("/certifieds/:id", verifyJWT, CertifiedController.update);
 routes.delete("/certifieds/:id", verifyJWT, CertifiedController.destroy);
+
+/* Rotas de documentos*/
+
+routes.get("/documents", verifyJWT, DocumentController.index);
+routes.get("/documents/:id", verifyJWT, DocumentController.show);
+routes.get("/documents/:id/users", verifyJWT, DocumentController.getUser);
+routes.post("/documents", [verifyJWT, validate("document")], DocumentController.store);
+routes.put("/documents/:id", verifyJWT, DocumentController.update);
+routes.delete("/documents/:id", verifyJWT, DocumentController.destroy);
 
 /* Rotas de dados bancários */
 

@@ -209,6 +209,22 @@ module.exports = method => {
                     .isEmpty()
             ];
         }
+        case "document": {
+            return [
+                check("title")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("path")
+                    .exists()
+                    .not()
+                    .isEmpty(),
+                check("userId")
+                    .exists()
+                    .not()
+                    .isEmpty()
+            ];
+        }
         case "databank": {
             return [
                 check("bank")

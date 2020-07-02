@@ -85,6 +85,10 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
+        status: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
         valueOne: DataTypes.INTEGER,
         valueFive: DataTypes.INTEGER,
         valueTen: DataTypes.INTEGER
