@@ -6,21 +6,6 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: true
-            }
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-            validate: {
-                notEmpty: true
-            }
-        },
         birthday: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -93,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
         valueFive: DataTypes.INTEGER,
         valueTen: DataTypes.INTEGER
     },
-    {   
+    {
         classMethods: {
 
         },
