@@ -108,7 +108,7 @@ class ReviewController{
                                     {
                                         model: models.Teacher,
                                         as: 'teachers',
-                                        attributes: ['id', 'name', 'email'],
+                                        attributes: ['id'],
                                         required: true
                                     }
                                 ],

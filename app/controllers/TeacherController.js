@@ -5,7 +5,7 @@ const Op = Sequelize.Op;
 
 class TeacherController{
     static async index(req, res) {
-        const { page } = req.query;
+        const { page, term } = req.query;
 
         const pagination = page ? page : 1;
         const limit = 10;
@@ -22,7 +22,12 @@ class TeacherController{
                     {
                         model: models.User,
                         as: 'users',
-                        attributes: ['id', 'name', 'lastName', 'email', 'pathImage']
+                        required: true,
+                        attributes: ['id', 'name', 'lastName', 'email', 'pathImage'],
+                        where : term ? {[Op.or] : {
+                                'name': {[Op.like]: `%${term.toLowerCase()}%`},
+                                'lastName': {[Op.like]: `%${term.toLowerCase()}%`},
+                            }} : {},
                     }
                 ],
                 limit: limit,
@@ -52,6 +57,7 @@ class TeacherController{
                     },
                     {
                         model: models.User,
+                        required: true,
                         as: 'users',
                         attributes: ['id', 'name', 'lastName', 'email', 'pathImage']
                     }
