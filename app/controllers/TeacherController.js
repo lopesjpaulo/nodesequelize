@@ -12,12 +12,17 @@ class TeacherController{
 
         try {
             const teachers = await models.Teacher.findAll({
-                attributes: ['id', 'name', 'email', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'valueFive', 'valueTen', 'type'],
+                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'type'],
                 include: [
                     {
                         model: models.Instrument,
                         as: 'instruments',
                         attributes: ['id', 'title']
+                    },
+                    {
+                        model: models.User,
+                        as: 'users',
+                        attributes: ['id', 'name', 'lastName', 'email', 'pathImage']
                     }
                 ],
                 limit: limit,
@@ -38,12 +43,17 @@ class TeacherController{
             if(!req.params.id) return res.status(400).json();
 
             const teacher = await models.Teacher.findByPk(req.params.id, {
-                attributes: ['id', 'name', 'email', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'valueFive', 'valueTen', 'about'],
+                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'about'],
                 include: [
                     {
                         model: models.Instrument,
                         as: 'instruments',
                         attributes: ['id', 'title']
+                    },
+                    {
+                        model: models.User,
+                        as: 'users',
+                        attributes: ['id', 'name', 'lastName', 'email', 'pathImage']
                     }
                 ]
             });
