@@ -12,6 +12,7 @@ const DocumentController = require("../controllers/DocumentController");
 const DatabankController = require("../controllers/DatabankController");
 const DatauserController = require("../controllers/DatauserController");
 const ContactController = require("../controllers/ContactController");
+const HelperController = require("../controllers/HelperController");
 const validate = require("../helpers/validate");
 
 const routes = express.Router();
@@ -138,5 +139,9 @@ routes.get("/contacts/:id/schedules", ContactController.getSchedule);
 routes.post("/contacts", ContactController.store);
 routes.put("/contacts", ContactController.update);
 routes.delete("/contacts/:id", ContactController.destroy);
+
+/* Rotas do S3 */
+
+routes.post("/url", HelperController.url);
 
 module.exports = routes;

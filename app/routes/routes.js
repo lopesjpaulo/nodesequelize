@@ -12,6 +12,7 @@ const DocumentController = require("../controllers/DocumentController");
 const DatabankController = require("../controllers/DatabankController");
 const DatauserController = require("../controllers/DatauserController");
 const ContactController = require("../controllers/ContactController");
+const HelperController = require("../controllers/HelperController");
 const validate = require("../helpers/validate");
 const verifyJWT = require("../middlewares/verifyJWT");
 
@@ -142,5 +143,9 @@ routes.get("/contacts/:id/schedules", verifyJWT, ContactController.getSchedule);
 routes.post("/contacts", verifyJWT, ContactController.store);
 routes.put("/contacts", verifyJWT, ContactController.update);
 routes.delete("/contacts/:id", verifyJWT, ContactController.destroy);
+
+/* Rotas do S3 */
+
+routes.post("/url", HelperController.url);
 
 module.exports = routes;
