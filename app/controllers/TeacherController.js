@@ -75,15 +75,25 @@ class TeacherController{
     static async store(req, res) {
         const errors = validationResult(req);
 
-        if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array(), data: req.body });
+        if(!errors.isEmpty()) {
+            await models.User.destroy({
+                where:{
+                    id: req.body.userId
+                }
+            });
+            return res.status(422).json({ errors: errors.array() });
+        }
 
         try{
             const teacher = await models.Teacher.create(req.body);
 
-            if(!teacher) return res.status(200).json({ auth: false });
-
-            return res.status(200).json({ auth: true, teacher: teacher });
+            return res.status(200).json({ teacher });
         }catch (error){
+            await models.User.destroy({
+                where:{
+                    id: req.body.userId
+                }
+            });
             return res.status(500).json({error});
         }
     }

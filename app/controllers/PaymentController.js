@@ -313,7 +313,7 @@ class PaymentController {
             return res.status(422).json({ errors: errors.array() });
 
         const schedule = await models.Schedule.findByPk(req.body.scheduleId, {
-            attributes: ["id", "userId", "finishedAt"],
+            attributes: ["id", "userId", "finishedAt", "avaliabilityId"],
             include: [
                 {
                     model: models.Avaliability,
@@ -323,7 +323,14 @@ class PaymentController {
                         {
                             model: models.Teacher,
                             as: "teachers",
-                            attributes: ["name", "valueOne"]
+                            attributes: ["id", "valueOne"],
+                            include: [
+                                {
+                                    model: models.User,
+                                    as: "users",
+                                    attributes: ["id", "name", "email"]
+                                }
+                            ]
                         }
                     ]
                 },
@@ -378,7 +385,7 @@ class PaymentController {
                             id: schedule.id.toString(),
                             title:
                                 "Aula de música - " +
-                                schedule.avaliabilities.teachers.name,
+                                schedule.avaliabilities.teachers.users.name,
                             unit_price: (amount * 100),
                             quantity: 1,
                             tangible: false
@@ -399,7 +406,7 @@ class PaymentController {
                         id: schedule.id
                     }
                 });
-                return res.status(500).json({ error});
+                return res.status(500).json({error});
             }
 
             if (transaction.status == "paid") {

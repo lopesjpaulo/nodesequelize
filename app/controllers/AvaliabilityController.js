@@ -12,7 +12,7 @@ class AvaliabilityController{
                     {
                         model: models.Teacher,
                         as: 'teachers',
-                        attributes: ['name', 'valueOne', 'valueFive', 'valueTen']
+                        attributes: ['valueOne']
                     }
                 ]
             });
@@ -49,7 +49,7 @@ class AvaliabilityController{
                     {
                         model: models.Teacher,
                         as: 'teachers',
-                        attributes: ['name', 'valueOne', 'valueFive', 'valueTen']
+                        attributes: ['valueOne']
                     }
                 ]
             });
@@ -113,7 +113,7 @@ class AvaliabilityController{
                     {
                         model: models.Teacher,
                         as: 'teachers',
-                        attributes: ['name', 'valueOne', 'valueFive', 'valueTen']
+                        attributes: ['valueOne']
                     }
                 ]
             });
@@ -151,7 +151,7 @@ class AvaliabilityController{
                     {
                         model: models.Teacher,
                         as: 'teachers',
-                        attributes: ['name', 'valueOne', 'valueFive', 'valueTen']
+                        attributes: ['valueOne']
                     }
                 ],
                 order: [

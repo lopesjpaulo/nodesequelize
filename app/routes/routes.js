@@ -148,4 +148,10 @@ routes.delete("/contacts/:id", verifyJWT, ContactController.destroy);
 
 routes.post("/url", HelperController.url);
 
+/* Validação */
+
+routes.post("/validEmail", HelperController.validEmail);
+routes.post("/validCpf", HelperController.validCPF);
+
+
 module.exports = routes;

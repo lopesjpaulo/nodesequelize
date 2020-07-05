@@ -90,6 +90,7 @@ class UserController{
 
             if (dataUser) {
                dataLogged = dataUser;
+                user['teacher'] = false;
             } else {
                 dataLogged = await models.Teacher.findOne({
                     where: {
@@ -97,7 +98,7 @@ class UserController{
                     }
                 });
 
-                user['teacher'] = teacher;
+                user['teacher'] = true;
             }
 
             var token = jwt.sign({id: user.id}, process.env.SECRET, {
