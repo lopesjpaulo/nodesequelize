@@ -88,6 +88,8 @@ class UserController{
                 }
             });
 
+            return res.status(200).json(dataUser);
+
             if (dataUser) {
                dataLogged = dataUser;
                 user['teacher'] = false;
