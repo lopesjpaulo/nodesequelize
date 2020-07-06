@@ -67,14 +67,12 @@ class UserController{
 
         if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
 
-        
+        try {
             const user = await models.User.findOne({
                 where: {
                     email: req.body.email
                 }
             });
-
-            return res.status(200).json(user);
 
             if(!user) return res.status(200).json({ auth: false });
 
@@ -89,7 +87,6 @@ class UserController{
                     userId: user.id
                 }
             });
-
 
             if (dataUser) {
                dataLogged = dataUser;
@@ -109,7 +106,9 @@ class UserController{
             });
 
             return res.status(200).json({ auth: true, token: token , user: user, data: dataLogged});
-        
+        } catch (error) {
+            return res.status(500).json({error});
+        }
     }
 
     static async update(req, res) {
