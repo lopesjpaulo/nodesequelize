@@ -74,6 +74,8 @@ class UserController{
                 }
             });
 
+            return res.status(200).json(user);
+
             if(!user) return res.status(200).json({ auth: false });
 
             const password = user.isPassword(user.password, req.body.password);
@@ -88,7 +90,6 @@ class UserController{
                 }
             });
 
-            return res.status(200).json(dataUser);
 
             if (dataUser) {
                dataLogged = dataUser;
