@@ -23,29 +23,14 @@ module.exports = method => {
         }
         case "teacher": {
             return [
-                check("name")
-                    .exists()
-                    .not()
-                    .isEmpty(),
                 check("cpf")
                     .exists()
                     .not()
                     .isEmpty(),
-                check("email")
-                    .exists()
-                    .isEmail(),
                 check("phone")
                     .not()
                     .isEmpty(),
-                check("cep")
-                    .exists()
-                    .not()
-                    .isEmpty(),
                 check("type")
-                    .exists()
-                    .not()
-                    .isEmpty(),
-                check("valueOne")
                     .exists()
                     .not()
                     .isEmpty(),

@@ -110,6 +110,59 @@ class ScheduleController{
         }
     }
 
+    static async getTeacher(req, res) {
+        try {
+            const schedules = await models.Schedule.findAll({
+                attributes: ['id', 'canceled', 'rescheduled', 'canceledAt', 'finishedAt', 'userId'],
+                order: [
+                    [ 'avaliabilities', 'date', 'ASC' ]
+                ],
+                include: [
+                    {
+                        model: models.Avaliability,
+                        as: 'avaliabilities',
+                        required: true,
+                        attributes: ['id', 'date', 'busy', 'teacherId'],
+                        include: [
+                            {
+                                model: models.Teacher,
+                                as: 'teachers',
+                                attributes: ['id'],
+                                required: true,
+                                include: [
+                                    {
+                                        model: models.User,
+                                        as: 'users',
+                                        attributes: ['id', 'name', 'lastName', 'email', 'pathImage'],
+                                    }
+                                ],
+                                where: [{
+                                    userId: req.userId
+                                } ],
+                            }
+                        ]
+                    },
+                    {
+                        model: models.User,
+                        as: 'users',
+                        attributes: ['id', 'name', 'lastname', 'email']
+                    },
+                    {
+                        model: models.Instrument,
+                        as: 'instruments',
+                        attributes: ['id', 'title']
+                    }
+                ],
+            });
+
+            if(!schedules) return res.status(204).json();
+
+            return res.status(200).json(schedules);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
     static async show(req, res) {
         try {
             if(!req.params.id) return res.status(400).json();
@@ -166,21 +219,30 @@ class ScheduleController{
 
             if(!avaliability) return res.status(204).json({ msg: 'Horário não disponível' });
 
+            const scheduleObj = {};
+
+            let reschedule = 1;
+
             if(req.body['scheduleId']){
-                const scheduleObj = await models.Schedule.destroy({
+                const scheduleObj = await models.Schedule.findByPk(req.params.id);
+                const scheduleDeleted = await models.Schedule.destroy({
                     where:{
                         id: req.body['scheduleId']
                     }
                 });
 
-                if(!scheduleObj) return res.status(400).json();
+                if(!scheduleDeleted && !scheduleObj) return res.status(400).json();
+
+                if(scheduleObj.canceled == 2) {
+                    reschedule = 0;
+                }
             }
 
             const schedule = await models.Schedule.create({
                 avaliabilityId: req.body.avaliabilityId,
                 userId: req.userId,
                 instrumentId: req.body.instrumentId,
-                rescheduled: req.body['scheduleId'] ? 1 : 0
+                rescheduled: req.body['scheduleId'] ? reschedule : 0
             });
             await models.Avaliability.update(
                 { busy: 1},
@@ -209,7 +271,7 @@ class ScheduleController{
 
             const schedule = await models.Schedule.update(
                 {
-                    canceled: 1,
+                    canceled: req.body.isteacher ? 2 : 1,
                     canceledAt: moment().utc(true),
                 },
                 { where: { id: req.params.id }}

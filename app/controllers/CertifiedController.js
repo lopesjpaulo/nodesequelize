@@ -54,7 +54,7 @@ class CertifiedController{
         if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
 
         try{
-            const certified = await models.Certified.create(req.body);
+            const certified = await models.Certified.bulkCreate(req.body);
 
             return res.status(200).json(certified);
         }catch (error){

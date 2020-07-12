@@ -5,7 +5,7 @@ const paginate = require('express-paginate');
 
 const PORT = 3000;
 const HOST = '0.0.0.0';
-const MODE = 'development';
+const MODE = process.env.MODE;
 var routes = '';
 
 if(MODE === 'development') {

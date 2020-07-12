@@ -48,7 +48,7 @@ class TeacherController{
             if(!req.params.id) return res.status(400).json();
 
             const teacher = await models.Teacher.findByPk(req.params.id, {
-                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'about'],
+                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'about', 'status', 'type'],
                 include: [
                     {
                         model: models.Instrument,
@@ -87,8 +87,8 @@ class TeacherController{
         try{
             const teacher = await models.Teacher.create(req.body);
 
-            return res.status(200).json({ teacher });
-        }catch (error){
+            return res.status(200).json(teacher);
+        } catch (error){
             await models.User.destroy({
                 where:{
                     id: req.body.userId
@@ -100,11 +100,9 @@ class TeacherController{
 
     static async update(req, res) {
         try {
-            if(!req.params.id) return res.status(400).json();
-
             const teacher = await models.Teacher.update(
                 req.body,
-                { where: { id: req.params.id }}
+                { where: { userId: req.userId }}
             );
 
             if(!teacher) return res.status(204).json();
@@ -112,6 +110,48 @@ class TeacherController{
             return res.status(200).json(teacher);
         } catch (error) {
             return res.status(500).json({error});
+        }
+    }
+
+    static async updateInstruments(req, res) {
+        try {
+            const teacher = await models.Teacher.findOne(
+                { where: { userId: req.userId }}
+            );
+
+            if(!teacher) return res.status(204).json();
+
+            const instruments = req.body.instruments;
+
+            let items = [];
+
+            instruments.forEach(item => {
+                const iu = {
+                    teacherId: teacher.id,
+                    instrumentId: item['id']
+                };
+
+                items.push(iu);
+            });
+
+            await models.InstrumentTeacher.destroy({
+                where:{
+                    teacherId: teacher.id
+                }
+            }).then(() => {
+                models.InstrumentTeacher.bulkCreate(items)
+                    .then(function(events) {
+                        console.log('salvou')
+                    }).catch(function(err) {
+                    console.log(err)
+                });
+            }).catch(function(err) {
+                console.log(err)
+            });
+
+            return res.status(200).json();
+        } catch (error) {
+            res.status(500).json({error});
         }
     }
 

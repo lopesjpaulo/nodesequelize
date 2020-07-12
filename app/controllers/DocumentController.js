@@ -54,7 +54,7 @@ class DocumentController{
         if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
 
         try{
-            const document = await models.Document.create(req.body);
+            const document = await models.Document.bulkCreate(req.body);
 
             return res.status(200).json(document);
         }catch (error){

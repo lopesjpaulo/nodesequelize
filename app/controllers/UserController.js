@@ -80,32 +80,30 @@ class UserController{
 
             if(!password) return res.status(200).json({ auth: false });
 
-            let dataLogged = null;
-
-            const dataUser = await models.Datauser.findOne({
+            const data = await models.Datauser.findOne({
                 where: {
                     userId: user.id
                 }
             });
 
-            if (dataUser) {
-               dataLogged = dataUser;
-                user['teacher'] = false;
-            } else {
-                dataLogged = await models.Teacher.findOne({
+            let isTeacher = false;
+            let teacher = {};
+
+            if (!data) {
+                teacher = await models.Teacher.findOne({
                     where: {
                         userId: user.id
                     }
                 });
 
-                user['teacher'] = true;
+                isTeacher = true;
             }
 
             var token = jwt.sign({id: user.id}, process.env.SECRET, {
                 expiresIn: "30 days"
             });
 
-            return res.status(200).json({ auth: true, token: token , user: user, data: dataLogged});
+            return res.status(200).json({ auth: true, token: token , user: user, data, teacher, isTeacher});
         } catch (error) {
             return res.status(500).json({error});
         }

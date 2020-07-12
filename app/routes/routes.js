@@ -36,6 +36,8 @@ routes.delete("/users/:id", verifyJWT, UserController.destroy);
 routes.get("/teachers", verifyJWT, TeacherController.index);
 routes.get("/teachers/:id", verifyJWT, TeacherController.show);
 routes.post("/teachers", [verifyJWT, validate("teacher")], TeacherController.store);
+routes.put("/teachers", verifyJWT, TeacherController.update);
+routes.put("/teachers/instruments", verifyJWT, TeacherController.updateInstruments);
 routes.get("/teachers/classes/:id", verifyJWT, TeacherController.countClasses);
 
 /* Rotas de Categorias */
@@ -56,7 +58,8 @@ routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeach
 
 routes.get("/avaliabilities/", verifyJWT,AvaliabilityController.index);
 routes.get("/avaliabilities/:id", verifyJWT,AvaliabilityController.show);
-routes.get("/avaliabilities/date/:date", AvaliabilityController.getDate);
+routes.post("/avaliabilities/update", verifyJWT,AvaliabilityController.updateMany);
+routes.post("/avaliabilities/set", verifyJWT,AvaliabilityController.setMany);
 routes.get("/avaliabilities/:teacherId/teachers", verifyJWT,AvaliabilityController.getTeacher);
 routes.post("/avaliabilities", [verifyJWT, validate("avaliability")], AvaliabilityController.store);
 routes.post("/avaliabilities/available", verifyJWT, AvaliabilityController.available);
@@ -68,6 +71,7 @@ routes.delete("/avaliabilities/:id", verifyJWT, AvaliabilityController.destroy);
 routes.get("/schedules", verifyJWT, ScheduleController.index);
 routes.get("/schedules/:id", verifyJWT, ScheduleController.show);
 routes.get("/schedules/:id/users", verifyJWT, ScheduleController.getUser);
+routes.get("/schedules/:id/teachers", verifyJWT, ScheduleController.getTeacher);
 routes.post("/schedules", [verifyJWT, validate("schedule")], ScheduleController.store);
 routes.put("/schedules/:id", verifyJWT, ScheduleController.update);
 routes.put("/schedules/cancel/:id", verifyJWT, ScheduleController.cancel);
@@ -103,7 +107,7 @@ routes.post("/payments/saveCustomer", [verifyJWT, validate("saveCustomer")], Pay
 routes.get("/certifieds", verifyJWT, CertifiedController.index);
 routes.get("/certifieds/:id", verifyJWT, CertifiedController.show);
 routes.get("/certifieds/:id/teachers", verifyJWT, CertifiedController.getTeacher);
-routes.post("/certifieds", [verifyJWT, validate("certified")], CertifiedController.store);
+routes.post("/certifieds", [verifyJWT], CertifiedController.store);
 routes.put("/certifieds/:id", verifyJWT, CertifiedController.update);
 routes.delete("/certifieds/:id", verifyJWT, CertifiedController.destroy);
 
@@ -112,7 +116,7 @@ routes.delete("/certifieds/:id", verifyJWT, CertifiedController.destroy);
 routes.get("/documents", verifyJWT, DocumentController.index);
 routes.get("/documents/:id", verifyJWT, DocumentController.show);
 routes.get("/documents/:id/users", verifyJWT, DocumentController.getUser);
-routes.post("/documents", [verifyJWT, validate("document")], DocumentController.store);
+routes.post("/documents", [verifyJWT], DocumentController.store);
 routes.put("/documents/:id", verifyJWT, DocumentController.update);
 routes.delete("/documents/:id", verifyJWT, DocumentController.destroy);
 
