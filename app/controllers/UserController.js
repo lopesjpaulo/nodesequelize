@@ -53,7 +53,7 @@ class UserController{
             if(!user) return res.status(200).json({ auth: false });
 
             let token = jwt.sign({id: user.id}, process.env.SECRET, {
-                expiresIn: "30 days"
+                expiresIn: 3600
             });
 
             return res.status(200).json({ auth: true, token: token , user: user});
@@ -100,13 +100,17 @@ class UserController{
             }
 
             var token = jwt.sign({id: user.id}, process.env.SECRET, {
-                expiresIn: "30 days"
+                expiresIn: 3600
             });
 
             return res.status(200).json({ auth: true, token: token , user: user, data, teacher, isTeacher});
         } catch (error) {
             return res.status(500).json({error});
         }
+    }
+
+    static async logout(req, res) {
+        res.status(200).json({ auth: false, token: null});
     }
 
     static async update(req, res) {

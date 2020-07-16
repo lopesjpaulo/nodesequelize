@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const paginate = require('express-paginate');
 
-const PORT = 3000;
+const PORT = 3333;
 const HOST = '0.0.0.0';
 const MODE = process.env.MODE;
 var routes = '';
