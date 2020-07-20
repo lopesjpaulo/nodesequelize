@@ -359,7 +359,7 @@ class PaymentController {
                 });
 
                 transaction = await client.transactions.create({
-                    amount: (amount * 100),
+                    amount: amount,
                     async: false,
                     payment_method: "credit_card",
                     card_id: req.body.card_id,
