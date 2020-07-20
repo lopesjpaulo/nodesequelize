@@ -13,9 +13,9 @@ module.exports = {
         about: 'Sobre teste 123',
         userId: '1',
         type: 'Profissional',
-        valueOne: '60.0',
-        valueFive: '270.0',
-        valueTen: '540.0',
+        valueOne: '6000',
+        valueFive: '27000',
+        valueTen: '54000',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -29,9 +29,9 @@ module.exports = {
         about: 'Sobre teste 2',
         userId: '2',
         type: 'Autodidata',
-        valueOne: '100.0',
-        valueFive: '475.0',
-        valueTen: '900.0',
+        valueOne: '10000',
+        valueFive: '47500',
+        valueTen: '90000',
         createdAt: new Date(),
         updatedAt: new Date()
       }

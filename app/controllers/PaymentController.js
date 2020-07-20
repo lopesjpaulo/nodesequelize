@@ -386,7 +386,7 @@ class PaymentController {
                             title:
                                 "Aula de música - " +
                                 schedule.avaliabilities.teachers.users.name,
-                            unit_price: (amount * 100),
+                            unit_price: amount,
                             quantity: 1,
                             tangible: false
                         }
