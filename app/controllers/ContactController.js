@@ -64,7 +64,7 @@ class ContactController{
         if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
 
         try{
-            const contact = await models.Contact.create(req.body);
+            const contact = await models.Contact.create({...req.body, userId: req.userId});
 
             return res.status(200).json(contact);
         }catch (error){
