@@ -27,6 +27,7 @@ routes.get("/users", verifyJWT, UserController.index);
 routes.get("/users/:id", verifyJWT, UserController.show);
 routes.post("/users", validate("create-user"), UserController.store);
 routes.post("/users/login", validate("login"), UserController.login);
+routes.post("/users/googlelogin", UserController.googleLogin);
 routes.post("/users/logout", UserController.logout);
 routes.post("/users/createRecovery", UserController.createRecovery);
 routes.post("/users/checkRecovery", UserController.checkRecovery);

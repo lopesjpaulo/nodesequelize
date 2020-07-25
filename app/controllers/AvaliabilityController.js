@@ -19,7 +19,7 @@ class AvaliabilityController{
 
             for (var i = 0; i < avaliabilites.length; i++) {
                 var date = new Date(avaliabilites[i].date);
-                var datefull = date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-'+ ('0' + date.getDate()).slice(-2);
+                var datefull = date.getUTCFullYear() + '-' + ('0' + (date.getUTCMonth()+1)).slice(-2) + '-'+ ('0' + date.getUTCMonth()).slice(-2);
                 var time = date.getUTCHours()+':'+date.getUTCMinutes();
 
                 avaliabilites[i]['dataValues']['date'] = datefull;
@@ -81,7 +81,7 @@ class AvaliabilityController{
 
             for (var i = 0; i < avaliabilites.length; i++) {
                 var date = new Date(avaliabilites[i].date);
-                var datefull = date.getFullYear() + '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-'+ ('0' + date.getDate()).slice(-2);
+                var datefull = date.getUTCFullYear() + '-' + ('0' + (date.getUTCMonth()+1)).slice(-2) + '-'+ ('0' + date.getUTCDate().toString()).slice(-2);
                 var time = date.getUTCHours()+':'+date.getUTCMinutes();
 
                 avaliabilites[i]['dataValues']['date'] = datefull;

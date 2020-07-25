@@ -34,7 +34,7 @@ class HelperController{
 
             if(!user) return res.status(200).json({ used: false });
 
-            return res.status(400).json({ used: false });
+            return res.status(200).json({ used: true });
         } catch (error) {
             return res.status(500).json(error);
         }
