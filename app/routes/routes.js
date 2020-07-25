@@ -21,6 +21,10 @@ const routes = express.Router();
 //Verificação de autenticação não pode ser em todas as rotas
 //routes.use(verifyJWT);
 
+routes.get("/ping", (req, res) => {
+    return res.status(200).json({ message: 'Success' });
+});
+
 /* Rotas de usuários */
 
 routes.get("/users", verifyJWT, UserController.index);
