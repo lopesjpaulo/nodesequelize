@@ -1,6 +1,10 @@
 const models = require("./../models/index")
 const { validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
+const { sendMail } = require('../helpers/nodemail');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+const moment = require('moment');
 require('dotenv-safe').config();
 
 class UserController{
@@ -175,6 +179,54 @@ class UserController{
 
             return res.status(200).json(user);
         } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async createRecovery(req, res) {
+        try {
+            const user = await models.User.findOne(
+                { where: { email: req.body.email }}
+            );
+
+            if(!user) return res.status(204).json();
+
+            const data = {
+                userId: user.id
+            };
+
+            const recovery = await models.Recovery.create(data);
+
+            if(!recovery) return res.status(400).json();
+
+            if(sendMail(user.email, recovery.codigo)) {
+                return res.status(200).json(recovery);
+            };
+
+            return res.status(400).json();
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async checkRecovery(req, res) {
+        try {
+            const recovery = await models.Recovery.findOne(
+                { where: { 
+                    codigo: req.body.codigo,
+                    used: 0,
+                    expiresAt: { [Op.gte]: moment().utc(true) }
+                }}
+            )
+
+            if(!recovery) return res.status(400).json({error: 'Código já usado ou expirou!'});
+
+            recovery.update({
+                used: 1
+            });
+
+            return res.status(200).json(recovery);
+        } catch(error) {
             return res.status(500).json({error});
         }
     }

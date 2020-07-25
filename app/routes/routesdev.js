@@ -23,6 +23,7 @@ routes.get("/users", UserController.index);
 routes.get("/users/:id", UserController.show);
 routes.post("/users", validate("create-user"), UserController.store);
 routes.post("/users/login", validate("login"), UserController.login);
+routes.post("/users/createRecovery", UserController.createRecovery);
 routes.put("/users", UserController.update);
 routes.put("/users/instruments", UserController.updateInstruments);
 routes.delete("/users/:id", UserController.destroy);

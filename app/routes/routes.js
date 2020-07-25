@@ -28,6 +28,8 @@ routes.get("/users/:id", verifyJWT, UserController.show);
 routes.post("/users", validate("create-user"), UserController.store);
 routes.post("/users/login", validate("login"), UserController.login);
 routes.post("/users/logout", UserController.logout);
+routes.post("/users/createRecovery", UserController.createRecovery);
+routes.post("/users/checkRecovery", UserController.checkRecovery);
 routes.put("/users", verifyJWT, UserController.update);
 routes.put("/users/instruments", verifyJWT, UserController.updateInstruments);
 routes.delete("/users/:id", verifyJWT, UserController.destroy);
