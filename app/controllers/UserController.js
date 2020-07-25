@@ -76,9 +76,58 @@ class UserController{
 
             if(!user) return res.status(200).json({ auth: false });
 
+            if(!user.password) return res.status(200).json({ auth: false });
+
             const password = user.isPassword(user.password, req.body.password);
 
             if(!password) return res.status(200).json({ auth: false });
+
+            const data = await models.Datauser.findOne({
+                where: {
+                    userId: user.id
+                }
+            });
+
+            let isTeacher = false;
+            let teacher = {};
+
+            if (!data) {
+                teacher = await models.Teacher.findOne({
+                    where: {
+                        userId: user.id
+                    }
+                });
+
+                isTeacher = true;
+            }
+
+            var token = jwt.sign({id: user.id}, process.env.SECRET, {
+                expiresIn: 3600
+            });
+
+            return res.status(200).json({ auth: true, token: token , user: user, data, teacher, isTeacher});
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async googleLogin(req, res) {
+        try {
+            const user = await models.User.findOne({
+                where: {
+                    email: req.body.email
+                }
+            });
+
+            if(!user) {
+                const userCreated = await models.User.create(req.body);
+
+                let token = jwt.sign({id: userCreated.id}, process.env.SECRET, {
+                    expiresIn: 3600
+                });
+
+                return res.status(200).json({ auth: true, token: token , user: userCreated});
+            }
 
             const data = await models.Datauser.findOne({
                 where: {

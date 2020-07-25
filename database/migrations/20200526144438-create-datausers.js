@@ -11,16 +11,16 @@ module.exports = {
       },
       birthday: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       cpf: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique:true
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       cep: {
         type: DataTypes.STRING,

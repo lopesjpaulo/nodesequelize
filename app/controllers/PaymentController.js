@@ -376,9 +376,6 @@ class PaymentController {
                           }
                         ],
                         phone_numbers: req.body.phone ? ['+55' + req.body.phone] : ['+55' + datauser.phone],
-                        birthday: req.body.birthday ?
-                            moment(req.body.birthday, "DD/MM/YYYY").format("YYYY-MM-DD") :
-                            moment(datauser.birthday, "DD/MM/YYYY").format("YYYY-MM-DD")
                       },
                     items: [
                         {

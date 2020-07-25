@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
             validate: {
                 notEmpty: true
             }
@@ -49,8 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         hooks: {
             beforeCreate: (user, options) => {
-                const salt = genSaltSync();
-                user.password = hashSync(user.password, salt);
+                if(user.password) {
+                    const salt = genSaltSync();
+                    user.password = hashSync(user.password, salt);
+                }
             },
             beforeUpdate: (user, options) => {
                 if(user.password){

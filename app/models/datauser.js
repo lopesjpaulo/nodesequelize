@@ -8,21 +8,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       birthday: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
           validate: {
               notEmpty: true
           }
       },
       cpf: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
           validate: {
               notEmpty: true
           }
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
             notEmpty: true
         }

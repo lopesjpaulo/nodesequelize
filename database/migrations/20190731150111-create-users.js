@@ -2,8 +2,8 @@
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
-   return queryInterface.createTable('Users', 
-    { 
+   return queryInterface.createTable('Users',
+    {
       id: {
        type: DataTypes.INTEGER,
        primaryKey: true,
@@ -27,9 +27,13 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: true
       },
+      googleId: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       createdAt: {
         type: DataTypes.DATE,
