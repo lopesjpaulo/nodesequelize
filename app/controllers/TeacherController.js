@@ -12,7 +12,7 @@ class TeacherController{
 
         try {
             const teachers = await models.Teacher.findAll({
-                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'type'],
+                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'type', 'status'],
                 include: [
                     {
                         model: models.Instrument,
@@ -99,10 +99,12 @@ class TeacherController{
     }
 
     static async update(req, res) {
+        if(!req.params.id) return res.status(400).json();
+
         try {
             const teacher = await models.Teacher.update(
                 req.body,
-                { where: { userId: req.userId }}
+                { where: { id: req.params.id }}
             );
 
             if(!teacher) return res.status(204).json();

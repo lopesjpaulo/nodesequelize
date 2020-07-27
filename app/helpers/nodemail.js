@@ -4,12 +4,12 @@ require('dotenv-safe').config();
 const sendMail = (email, code) => {
 
     const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: process.env.SMTP_HOST,
         port: 587,
         secure: false,
         auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASS
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
         }
     });
     
