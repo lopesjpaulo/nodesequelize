@@ -36,6 +36,7 @@ routes.post("/users/logout", UserController.logout);
 routes.post("/users/createRecovery", UserController.createRecovery);
 routes.post("/users/checkRecovery", UserController.checkRecovery);
 routes.put("/users", verifyJWT, UserController.update);
+routes.put("/users/:userId", UserController.update);
 routes.put("/users/instruments", verifyJWT, UserController.updateInstruments);
 routes.delete("/users/:id", verifyJWT, UserController.destroy);
 

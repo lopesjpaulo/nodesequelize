@@ -169,7 +169,7 @@ class UserController{
 
     static async update(req, res) {
         try {
-            const user = await models.User.findByPk(req.userId);
+            const user = await models.User.findByPk(req.userId ? req.userId : req.params.userId);
 
             if (req.body['password']) {
                 let data = req.body;
@@ -289,7 +289,7 @@ class UserController{
                 used: 1
             });
 
-            return res.status(200).json({valid: true});
+            return res.status(200).json({valid: recovery.userId});
         } catch(error) {
             return res.status(500).json({error});
         }
