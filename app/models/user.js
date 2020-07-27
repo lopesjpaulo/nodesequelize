@@ -53,12 +53,6 @@ module.exports = (sequelize, DataTypes) => {
                     const salt = genSaltSync();
                     user.password = hashSync(user.password, salt);
                 }
-            },
-            beforeUpdate: (user, options) => {
-                if(user.password){
-                    const salt = genSaltSync();
-                    user.password = hashSync(user.password, salt);
-                }
             }
         },
         timestamps: true,

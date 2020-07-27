@@ -78,13 +78,13 @@ class UserController{
                 }
             });
 
-            if(!user) return res.status(200).json({ auth: false });
+            if(!user) return res.status(200).json({ auth: false, message: 'email incorreto' });
 
-            if(!user.password) return res.status(200).json({ auth: false });
+            if(!user.password) return res.status(200).json({ auth: false, message: 'senha não definida' });
 
             const password = user.isPassword(user.password, req.body.password);
 
-            if(!password) return res.status(200).json({ auth: false });
+            if(!password) return res.status(200).json({ auth: false, message: 'senha incorreta' });
 
             const data = await models.Datauser.findOne({
                 where: {
@@ -261,7 +261,7 @@ class UserController{
     static async checkRecovery(req, res) {
         try {
             const recovery = await models.Recovery.findOne(
-                { where: { 
+                { where: {
                     codigo: req.body.codigo,
                     used: 0,
                     expiresAt: { [Op.gte]: moment().utc(true) }
