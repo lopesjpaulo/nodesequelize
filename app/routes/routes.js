@@ -46,6 +46,7 @@ routes.get("/teachers", verifyJWT, TeacherController.index);
 routes.get("/teachers/:id", verifyJWT, TeacherController.show);
 routes.post("/teachers", [verifyJWT, validate("teacher")], TeacherController.store);
 routes.put("/teachers/:id", verifyJWT, TeacherController.update);
+routes.put("/teachers", verifyJWT, TeacherController.updateLogged);
 routes.put("/teachers/instruments", verifyJWT, TeacherController.updateInstruments);
 routes.get("/teachers/classes/:id", verifyJWT, TeacherController.countClasses);
 

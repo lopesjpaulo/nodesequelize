@@ -115,6 +115,23 @@ class TeacherController{
         }
     }
 
+    static async updateLogged(req, res) {
+        if(!req.userId) return res.status(400).json();
+
+        try {
+            const teacher = await models.Teacher.update(
+                req.body,
+                { where: { id: req.userId }}
+            );
+
+            if(!teacher) return res.status(204).json();
+
+            return res.status(200).json(teacher);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
     static async updateInstruments(req, res) {
         try {
             const teacher = await models.Teacher.findOne(
