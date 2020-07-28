@@ -281,9 +281,9 @@ class UserController{
                     used: 0,
                     expiresAt: { [Op.gte]: moment().utc(true) }
                 }}
-            )
+            );
 
-            if(!recovery) return res.status(400).json({valid: false});
+            if(!recovery) return res.status(200).json({valid: false});
 
             recovery.update({
                 used: 1
