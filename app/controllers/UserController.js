@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
 const { sendMail } = require('../helpers/nodemail');
 const Sequelize = require('sequelize');
+const { genSaltSync, hashSync } = require("bcryptjs");
 const Op = Sequelize.Op;
 const moment = require('moment-timezone');
 moment().tz("America/Recife").format();
@@ -169,7 +170,21 @@ class UserController{
 
     static async update(req, res) {
         try {
-            const user = await models.User.findByPk(req.userId);
+            const user = await models.User.findByPk(req.userId ? req.userId : req.params.userId);
+
+            if (req.body['password']) {
+                let data = req.body;
+
+                const salt = genSaltSync();
+
+                data['password'] = hashSync(data['password'], salt);
+
+                const result = user.update(req.body);
+
+                if(!result) return res.status(204).json();
+
+                return res.status(200).json(result);
+            }
 
             const result = user.update(req.body);
 
@@ -239,7 +254,7 @@ class UserController{
                 { where: { email: req.body.email }}
             );
 
-            if(!user) return res.status(204).json();
+            if(!user) return res.status(200).json({ sent: 0 });
 
             const data = {
                 userId: user.id
@@ -250,7 +265,7 @@ class UserController{
             if(!recovery) return res.status(400).json();
 
             if(sendMail(user.email, recovery.codigo)) {
-                return res.status(200).json(recovery);
+                return res.status(200).json({ sent: 1 });
             };
 
             return res.status(400).json();
@@ -267,15 +282,15 @@ class UserController{
                     used: 0,
                     expiresAt: { [Op.gte]: moment().utc(true) }
                 }}
-            )
+            );
 
-            if(!recovery) return res.status(400).json({error: 'Código já usado ou expirou!'});
+            if(!recovery) return res.status(200).json({valid: false});
 
             recovery.update({
                 used: 1
             });
 
-            return res.status(200).json(recovery);
+            return res.status(200).json({valid: recovery.userId});
         } catch(error) {
             return res.status(500).json({error});
         }

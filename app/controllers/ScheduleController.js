@@ -225,7 +225,7 @@ class ScheduleController{
             let reschedule = 1;
 
             if(req.body['scheduleId']){
-                const scheduleObj = await models.Schedule.findByPk(req.params.id);
+                const scheduleObj = await models.Schedule.findByPk(req.body['scheduleId']);
                 const scheduleDeleted = await models.Schedule.destroy({
                     where:{
                         id: req.body['scheduleId']
