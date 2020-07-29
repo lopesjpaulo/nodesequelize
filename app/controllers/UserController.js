@@ -295,6 +295,10 @@ class UserController{
             return res.status(500).json({error});
         }
     }
+
+    /*static checkMoment(req, res) {
+        return res.status(200).json(moment().tz("America/Recife").format());
+    }*/
 }
 
 module.exports = UserController
