@@ -70,12 +70,19 @@ class AvaliabilityController{
 
     static async getTeacher(req, res) {
         try {
+
+            const teacher = await models.Teacher.findOne({
+                where: {
+                    userId: req.userId
+                }
+            });
+
             var avaliabilites = await models.Avaliability.findAll({
                 where: {
-                    busy: 0,
+                    busy: teacher ? [0,1] : 0,
                     teacherId: req.params.teacherId,
                     date: {
-                        [Op.gte]: moment().utc(true).toDate()
+                        [Op.gt]: teacher ? moment().utc(true) : moment().add(1, 'hours').utc(true)
                     }
                 }
             });

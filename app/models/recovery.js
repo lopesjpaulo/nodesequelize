@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         used: {
             type: DataTypes.INTEGER,
             defaultValue: 0
-        },  
+        },
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         hooks: {
             beforeCreate: (recovery, options) => {
                 recovery.codigo = crypto.randomBytes(4).toString('hex');
-                recovery.expiresAt = moment(Date.now()).add(1, 'hours').utc(true);
+                recovery.expiresAt = moment().add(1, 'hours').utc(true);
                 //recovery.expiresAt.setHours(recovery.expiresAt.getHours() + 1);
             },
         },
