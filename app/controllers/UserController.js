@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const { sendMail } = require('../helpers/nodemail');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const moment = require('moment');
+const moment = require('moment-timezone');
+moment().tz("America/Recife").format();
 require('dotenv-safe').config();
 
 class UserController{

@@ -3,7 +3,8 @@ require('dotenv-safe').config;
 const { validationResult } = require("express-validator");
 const Sequelize = require("sequelize");
 const pagarme = require("pagarme");
-const moment = require('moment');
+const moment = require('moment-timezone');
+moment().tz("America/Recife").format();
 const Op = Sequelize.Op;
 
 class PaymentController {
