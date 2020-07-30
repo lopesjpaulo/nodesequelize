@@ -22,7 +22,14 @@ class ReviewController{
                                     {
                                         model: models.Teacher,
                                         as: 'teachers',
-                                        attributes: ['id', 'name', 'email']
+                                        attributes: ['id'],
+                                        include: [
+                                            {
+                                                model: models.User,
+                                                as: 'users',
+                                                attributes: ['id', 'name', 'lastname', 'email']
+                                            }
+                                        ]
                                     }
                                 ]
                             },
@@ -64,7 +71,14 @@ class ReviewController{
                                     {
                                         model: models.Teacher,
                                         as: 'teachers',
-                                        attributes: ['id', 'name', 'email']
+                                        attributes: ['id'],
+                                        include: [
+                                            {
+                                                model: models.User,
+                                                as: 'users',
+                                                attributes: ['id', 'name', 'lastname', 'email']
+                                            }
+                                        ]
                                     }
                                 ]
                             }
