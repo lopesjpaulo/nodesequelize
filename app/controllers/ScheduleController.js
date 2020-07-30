@@ -23,12 +23,12 @@ class ScheduleController{
                             {
                                 model: models.Teacher,
                                 as: 'teachers',
-                                attributes: ['id'],
+                                attributes: ['id', 'name', 'email'],
                                 include: [
                                     {
-                                        model: models.User,
-                                        as: 'users',
-                                        attributes: ['id', 'name', 'lastname', 'email']
+                                        model: models.Instrument,
+                                        as: 'instruments',
+                                        attributes: ['id', 'title']
                                     }
                                 ]
                             }
@@ -214,7 +214,11 @@ class ScheduleController{
 
         try{
             const avaliability = await models.Avaliability.findOne({
-                where: { id: req.body.avaliabilityId, busy: 0, date: { [Op.gt]: Date.now() } }
+                where: {
+                    id: req.body.avaliabilityId,
+                    busy: 0,
+                    date: { [Op.gt]: moment().utc(true).toDate() }
+                }
             });
 
 
