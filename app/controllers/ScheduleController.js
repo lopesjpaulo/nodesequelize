@@ -27,7 +27,7 @@ class ScheduleController{
                                 include: [
                                     {
                                         model: models.User,
-                                        as: 'user_teacher',
+                                        as: 'users',
                                         attributes: ['id', 'name', 'lastname', 'email']
                                     }
                                 ]
