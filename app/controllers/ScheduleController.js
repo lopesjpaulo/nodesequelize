@@ -217,7 +217,6 @@ class ScheduleController{
                 where: {
                     id: req.body.avaliabilityId,
                     busy: 0,
-                    date: { [Op.gt]: moment().utc(true).toDate() }
                 }
             });
 
