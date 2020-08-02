@@ -103,7 +103,11 @@ module.exports = (sequelize, DataTypes) => {
         Teacher.hasMany(models.Review, {
             as: 'reviews',
             foreignKey: 'teacherId'
-        })
+        });
+        Teacher.hasMany(models.Certified, {
+            as: 'certifieds',
+            foreignKey: 'teacherId'
+        });
     };
 
     return Teacher;

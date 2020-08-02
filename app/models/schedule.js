@@ -34,6 +34,22 @@ module.exports = (sequelize, DataTypes) => {
             },
             onDelete: 'CASCADE'
         },
+        cancellationReason: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            validate: {
+                notEmpty: true
+            }
+        },
+        originalSchedule: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references : {
+                model: 'schedule',
+                key: 'id'
+            },
+            onDelete: 'CASCADE'
+        },
         finishedAt: {
           type: DataTypes.DATE,
           allowNull: true

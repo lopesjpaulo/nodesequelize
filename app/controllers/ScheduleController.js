@@ -246,7 +246,8 @@ class ScheduleController{
                 avaliabilityId: req.body.avaliabilityId,
                 userId: req.userId,
                 instrumentId: req.body.instrumentId,
-                rescheduled: req.body['scheduleId'] ? reschedule : 0
+                rescheduled: req.body['scheduleId'] ? reschedule : 0,
+                originalSchedule: req.body['scheduleId'] ? req.body['scheduleId'] : null
             });
             await models.Avaliability.update(
                 { busy: 1},
@@ -277,6 +278,7 @@ class ScheduleController{
                 {
                     canceled: req.body.isteacher ? 2 : 1,
                     canceledAt: moment().utc(true),
+                    cancellationReason: req.body.reason ? req.body.reason : null
                 },
                 { where: { id: req.params.id }}
             );

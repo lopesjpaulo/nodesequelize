@@ -5,7 +5,7 @@ const Op = Sequelize.Op;
 
 class TeacherController{
     static async index(req, res) {
-        const { page, term } = req.query;
+        const { page, term, instrument } = req.query;
 
         const pagination = page ? page : 1;
         const limit = 10;
@@ -17,7 +17,11 @@ class TeacherController{
                     {
                         model: models.Instrument,
                         as: 'instruments',
-                        attributes: ['id', 'title']
+                        attributes: ['id', 'title'],
+                        required: true,
+                        where : instrument ? {[Op.or] : {
+                                'title': {[Op.like]: `%${instrument.toLowerCase()}%`},
+                            }} : {},
                     },
                     {
                         model: models.User,
@@ -30,6 +34,9 @@ class TeacherController{
                             }} : {},
                     }
                 ],
+                where:{
+                    status: 1
+                },
                 limit: limit,
                 offset: ((pagination-1)*limit),
                 subQuery: false
@@ -56,12 +63,20 @@ class TeacherController{
                         attributes: ['id', 'title']
                     },
                     {
+                        model: models.Certified,
+                        as: 'certifieds',
+                        attributes: ['id', 'title']
+                    },
+                    {
                         model: models.User,
                         required: true,
                         as: 'users',
                         attributes: ['id', 'name', 'lastName', 'email', 'pathImage']
                     }
-                ]
+                ],
+                where:{
+                    status: 1
+                },
             });
 
             if(!teacher) return res.status(204).json();
