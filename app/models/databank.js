@@ -60,6 +60,10 @@ module.exports = (sequelize, DataTypes) => {
           as: 'teachers',
           foreignKey: 'teacherId'
       });
+      Databank.belongsTo(models.Bank, {
+        as: 'banks',
+        foreignKey: 'bankId'
+    });
   };
 
   return Databank;
