@@ -9,10 +9,6 @@ module.exports = {
           autoIncrement: true,
           allowNull:false
         },
-        bank: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         agency: {
           type: DataTypes.STRING,
           allowNull: false

@@ -7,7 +7,7 @@ class DatabankController{
     static async index(req, res) {
         try {
             const databanks = await models.Databank.findAll({
-                attributes: ['id', 'bank', 'agency', 'account', 'digit'],
+                attributes: ['id', 'agency', 'account', 'digit'],
                 include: [
                     {
                         model: models.Teacher,
@@ -21,6 +21,11 @@ class DatabankController{
                                 attributes: ['id', 'name', 'lastName', 'email', 'pathImage'],
                             }
                         ]
+                    },
+                    {
+                        model: models.Bank,
+                        as: 'banks',
+                        attributes: ['id', 'value', 'label']
                     }
                 ]
             });
@@ -38,12 +43,17 @@ class DatabankController{
             if(!req.params.id) return res.status(400).json();
 
             const databank = await models.Databank.findByPk(req.params.id, {
-                attributes: ['id', 'bank', 'agency', 'account', 'digit'],
+                attributes: ['id', 'agency', 'account', 'digit'],
                 include: [
                     {
                         model: models.Teacher,
                         as: 'teachers',
                         attributes: ['id']
+                    },
+                    {
+                        model: models.Bank,
+                        as: 'banks',
+                        attributes: ['id', 'value', 'label']
                     }
                 ]
             });
@@ -108,9 +118,14 @@ class DatabankController{
 
         try {
             const databanks = await models.Databank.findAll({
-                attributes: ['id', 'bank', 'agency', 'account', 'digit'],
+                attributes: ['id', 'agency', 'account', 'digit'],
                 where: {
                   teacherId: req.params.id,
+                },
+                include: {
+                    model: models.Bank,
+                    as: 'banks',
+                    attributes: ['id', 'value', 'label']
                 }
             });
 

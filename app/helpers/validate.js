@@ -212,10 +212,6 @@ module.exports = method => {
         }
         case "databank": {
             return [
-                check("bank")
-                    .exists()
-                    .not()
-                    .isEmpty(),
                 check("agency")
                     .exists()
                     .not()

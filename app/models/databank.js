@@ -6,13 +6,6 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
           autoIncrement: true
       },
-      bank: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          validate: {
-              notEmpty: true
-          }
-      },
       agency: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -34,11 +27,27 @@ module.exports = (sequelize, DataTypes) => {
             notEmpty: true
         }
       },
+      bank_account_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+      },
       teacherId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references : {
             model: 'teacher',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
+      bankId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references : {
+            model: 'bank',
             key: 'id'
         },
         onDelete: 'CASCADE'

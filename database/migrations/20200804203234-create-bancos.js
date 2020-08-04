@@ -1,20 +1,32 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Datatypes) => {
+  up: (queryInterface, DataTypes) => {
       return queryInterface.createTable('Banks', { 
         id: {
-            type: Datatypes.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull:false
         },
         value: {
-            type: Datatypes.STRING
+            type: DataTypes.STRING
         },
         label: {
-            type: Datatypes.STRING
-        }
+            type: DataTypes.STRING
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.fn('NOW'),
+          },
+          updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.fn('NOW'),
+          },
+          deletedAt: {
+            type:DataTypes.DATE,
+            allowNull: true
+          }
       });
   },
 
