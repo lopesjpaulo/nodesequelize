@@ -36,7 +36,15 @@ class UserController{
         try {
             if(!req.params.id) return res.status(400).json();
 
-            const user = await models.User.findByPk(req.params.id);
+            const user = await models.User.findByPk(req.params.id, {
+                include: [
+                    {
+                        model: models.Instrument,
+                        as: 'instruments',
+                        attributes: ['id', 'title']
+                    }
+                ],
+            });
 
             if(!user) return res.status(204).json();
 

@@ -136,7 +136,7 @@ class TeacherController{
         try {
             const teacher = await models.Teacher.update(
                 req.body,
-                { where: { id: req.userId }}
+                { where: { userId: req.userId }}
             );
 
             if(!teacher) return res.status(204).json();
