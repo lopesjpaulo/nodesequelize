@@ -82,7 +82,9 @@ class AvaliabilityController{
                     busy: teacher ? [0,1] : 0,
                     teacherId: req.params.teacherId,
                     date: {
-                        [Op.gt]: teacher ? moment().utc(true) : moment().add(1, 'hours').utc(true)
+                        // TODO adicionar logica quando for pra produção
+                        //[Op.gt]: teacher ? moment().utc(true) : moment().add(1, 'hours').utc(true)
+                        [Op.gt]: moment().utc(true)
                     }
                 }
             });
