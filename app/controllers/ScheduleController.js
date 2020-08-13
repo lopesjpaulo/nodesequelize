@@ -23,12 +23,18 @@ class ScheduleController{
                             {
                                 model: models.Teacher,
                                 as: 'teachers',
-                                attributes: ['id', 'name', 'email'],
+                                attributes: ['id'],
                                 include: [
                                     {
                                         model: models.Instrument,
                                         as: 'instruments',
                                         attributes: ['id', 'title']
+                                    },
+                                    {
+                                        model: models.User,
+                                        as: 'users',
+                                        required: true,
+                                        attributes: ['id', 'name', 'lastName', 'email', 'pathImage'],
                                     }
                                 ]
                             }
