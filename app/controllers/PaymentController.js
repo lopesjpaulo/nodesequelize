@@ -412,7 +412,7 @@ class PaymentController {
                     const payment = models.Payment.create({
                         paid_at: transaction.date_created,
                         scheduleId: schedule.id,
-                        transcation_id: transaction.id
+                        transaction_id: transaction.id
                     });
                     return res.status(200).json({ paid: true, transaction, schedule });
                 } catch (error) {
