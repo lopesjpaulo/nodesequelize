@@ -105,6 +105,7 @@ routes.delete("/reviews/:id", verifyJWT, ReviewController.destroy);
 
 routes.get("/payments", verifyJWT, PaymentController.index);
 routes.get("/payments/listCards", [verifyJWT], PaymentController.listCards);
+routes.get("/payments/testStore", [verifyJWT], PaymentController.testStore);
 routes.delete("/payments/deleteCard/:id", verifyJWT, PaymentController.destroyCard);
 routes.get("/payments/:id", verifyJWT, PaymentController.show);
 routes.post("/payments", [verifyJWT, validate("payment")], PaymentController.store);

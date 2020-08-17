@@ -263,13 +263,14 @@ class PaymentController {
         }
     }*/
 
-    /*static async testStore(req, res) {
+    static async testStore(req, res) {
         const client = await pagarme.client.connect({
             api_key: process.env.PAGARME_API_KEY
         });
+        let transaction;
 
         try{
-            const transaction = await client.transactions.create({
+            transaction = await client.transactions.create({
                 amount: 1000,
                 payment_method: "credit_card",
                 card_id: "card_ckash57zh08np7x6dpujys9qr",
@@ -300,11 +301,19 @@ class PaymentController {
                 ]
             });
 
-            return res.status(200).json(transaction);
+            //return res.status(200).json(transaction);
         } catch(error) {
             return res.status(500).json({ error });
         }
-    }*/
+
+        const payment = models.Payment.create({
+            paid_at: transaction.date_created,
+            scheduleId: 1,
+            transaction_id: transaction.id
+        });
+
+        return res.status(200).json(transaction);
+    }
 
     static async store(req, res) {
         const errors = validationResult(req);
