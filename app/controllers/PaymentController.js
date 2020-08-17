@@ -307,9 +307,9 @@ class PaymentController {
         }
 
         const payment = models.Payment.create({
-            paid_at: transaction.date_created,
+            paid_at: new Date(transaction.date_created),
             scheduleId: 1,
-            transaction_id: transaction.id
+            transaction_id: (transaction.id).toString()
         });
 
         return res.status(200).json(transaction);
