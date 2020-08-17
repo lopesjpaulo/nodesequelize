@@ -18,8 +18,12 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: "CASCADE"
             },
-            paidAt: {
+            paid_at: {
                 type: DataTypes.DATE,
+                allowNull: true
+            },
+            transaction_id: {
+                type: DataTypes.STRING,
                 allowNull: true
             }
         },
