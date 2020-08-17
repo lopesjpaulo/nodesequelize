@@ -13,7 +13,14 @@ class AvaliabilityController{
                     {
                         model: models.Teacher,
                         as: 'teachers',
-                        attributes: ['valueOne']
+                        include: [
+                            {
+                                model: models.User,
+                                as: 'users',
+                                required: true,
+                                attributes: ['id', 'name', 'lastName'],
+                            }
+                        ]
                     }
                 ]
             });
