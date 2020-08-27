@@ -13,6 +13,7 @@ class AvaliabilityController{
                     {
                         model: models.Teacher,
                         as: 'teachers',
+                        attributes: ['id'],
                         include: [
                             {
                                 model: models.User,

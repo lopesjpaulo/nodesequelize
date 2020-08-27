@@ -63,6 +63,7 @@ routes.delete("/categories/:id", verifyJWT, CategoryController.destroy);
 /* Rotas de instrumentos */
 
 routes.get("/instruments", verifyJWT, InstrumentController.index);
+routes.post("/instruments", verifyJWT, InstrumentController.store);
 routes.get("/instruments/:id", verifyJWT, InstrumentController.show);
 routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeacher);
 

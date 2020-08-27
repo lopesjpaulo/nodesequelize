@@ -42,6 +42,20 @@ class InstrumentController{
         }
     }
 
+    static async store(req, res){
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+
+        try{
+            const instrument = await models.Instrument.create(req.body);
+
+            return res.status(200).json(instrument);
+        }catch (error){
+            return res.status(500).json({error});
+        }
+    }
+
     static async getTeacher(req, res){
         if (!req.params.id) return res.status(400).json();
 
