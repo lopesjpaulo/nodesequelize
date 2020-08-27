@@ -4,6 +4,7 @@ const { validationResult } = require("express-validator");
 const Sequelize = require("sequelize");
 const pagarme = require("pagarme");
 const moment = require('moment-timezone');
+const { sendNotification }  = require("../helpers/push");
 moment().tz("America/Recife").format();
 const Op = Sequelize.Op;
 
@@ -201,68 +202,6 @@ class PaymentController {
         }
     }
 
-    /*processPayment(amount, schedule, datauser, req) {
-        try {
-            const transaction = this.client.transactions.create({
-                amount: amount,
-                payment_method: "credit_card",
-                card_id: req.body.card_id,
-                postback_url: process.env.URL+'/postbackurl',
-                customer: {
-                    external_id: toString(schedule.userID),
-                    name: schedule.users.name,
-                    type: "individual",
-                    country: "br",
-                    email: schedule.users.email,
-                    documents: [
-                        {
-                            type: 'cpf',
-                            number: req.body.numberDocument ? req.body.numberDocument: datauser.cpf
-                        }
-                    ],
-                    phone_numbers: [datauser.phone],
-                    birthday: datauser.birthday
-                },
-                billing: {
-                    name: req.body.billingName,
-                    address: {
-                        country: req.body.country ? req.body.country : datauser.country,
-                        state: req.body.state ? req.body.state : datauser.state,
-                        city: req.body.city ? req.body.city : datauser.city,
-                        neighborhood: req.body.bairro ? req.body.bairro : datauser.bairro,
-                        street: req.body.street ? req.body.street : datauser.street,
-                        street_number: req.body.number ? req.body.number : datauser.number,
-                        zipcode: req.body.zipcode ? req.body.zipcode : datauser.cep
-                    }
-                },
-                items: [
-                    {
-                        id: schedule.id.toString(),
-                        title:
-                            "Aula de música - " +
-                            schedule.avaliabilities.teachers.name,
-                        unit_price: amount,
-                        quantity: 1,
-                        tangible: false
-                    }
-                ]
-            });
-
-            if (transaction.status == "paid") {
-                try {
-                    const payment = models.Payment.create(req.body);
-                    return res.status(200).json(payment);
-                } catch (error) {
-                    return res.status(500).json({ error });
-                }
-            } else {
-                return res.status(400).json(transaction);
-            }
-        } catch (error) {
-            return res.status(500).json(error);
-        }
-    }*/
-
     static async testStore(req, res) {
         const client = await pagarme.client.connect({
             api_key: process.env.PAGARME_API_KEY
@@ -338,7 +277,7 @@ class PaymentController {
                                 {
                                     model: models.User,
                                     as: "users",
-                                    attributes: ["id", "name", "email"]
+                                    attributes: ["id", "name", "email", "playerId"]
                                 }
                             ]
                         }
@@ -347,7 +286,7 @@ class PaymentController {
                 {
                     model: models.User,
                     as: "users",
-                    attributes: ["id", "name", "email"]
+                    attributes: ["id", "name", "email", "playerId"]
                 }
             ]
         });
@@ -423,6 +362,33 @@ class PaymentController {
                         scheduleId: schedule.id,
                         transaction_id: transaction.id
                     });
+
+                    let dateToSend = moment(schedule.avaliabilities['date']).utc(false).subtract(5, 'minutes').format('YYYY-MM-DD HH:mm:SS') + ' GMT-0300';
+
+                    if (schedule.avaliabilities.teachers.users['playerId']){
+                        sendNotification({
+                            template_id: 'f94b5aa3-a10c-414c-af45-5923abb76109',
+                            include_player_ids: [schedule.avaliabilities.teachers.users['playerId']],
+                            send_after: dateToSend
+                        });
+
+                        sendNotification({
+                            template_id: 'f94b5aa3-a10c-414c-af45-5923abb76109',
+                            include_player_ids: [schedule.avaliabilities.teachers.users['playerId']],
+                            contents : {
+                                'en': 'Você tem uma nova aula agendada para o dia ' + moment(schedule.avaliabilities['date']).utc(false).format('DD/MM/YYYY') + ' às ' + moment(schedule.avaliabilities['date']).utc(false).format('HH:mm')
+                            }
+                        });
+                    }
+
+                    if (schedule.users['playerId']){
+                        sendNotification({
+                            template_id: '2e4cbe1f-6e66-457b-a701-230aa7d1e86b',
+                            include_player_ids: [schedule.users['playerId']],
+                            send_after: dateToSend
+                        });
+                    }
+
                     return res.status(200).json({ paid: true, transaction, schedule });
                 } catch (error) {
                     const avaliabilityCancel = await models.Avaliability.update(
