@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: null
+        },
+        playerId: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
         }
     },
     {
