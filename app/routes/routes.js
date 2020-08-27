@@ -66,6 +66,7 @@ routes.get("/instruments", verifyJWT, InstrumentController.index);
 routes.post("/instruments", verifyJWT, InstrumentController.store);
 routes.get("/instruments/:id", verifyJWT, InstrumentController.show);
 routes.get("/instruments/:id/teachers", verifyJWT, InstrumentController.getTeacher);
+routes.delete("/instruments/:id", verifyJWT, InstrumentController.destroy);
 
 /* Rotas de disponibilidades */
 

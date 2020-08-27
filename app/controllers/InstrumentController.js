@@ -56,6 +56,22 @@ class InstrumentController{
         }
     }
 
+    static async destroy(req, res) {
+        try {
+            const instrument = await models.Instrument.destroy({
+                where:{
+                    id: req.params.id
+                }
+            });
+
+            if(!instrument) return res.status(400).json();
+
+            return res.status(200).json(instrument);
+        } catch (error) {
+            return res.status(500).json({error});
+        }
+    }
+
     static async getTeacher(req, res){
         if (!req.params.id) return res.status(400).json();
 
