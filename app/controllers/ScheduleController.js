@@ -11,7 +11,7 @@ class ScheduleController{
             const schedules = await models.Schedule.findAll({
                 attributes: ['id', 'canceled', 'rescheduled', 'canceledAt', 'finishedAt', 'userId'],
                 order: [
-                    [ 'avaliabilities', 'date', 'ASC' ]
+                    [ 'avaliabilities', 'date', 'DESC' ]
                 ],
                 include: [
                     {
@@ -23,7 +23,7 @@ class ScheduleController{
                             {
                                 model: models.Teacher,
                                 as: 'teachers',
-                                attributes: ['id'],
+                                attributes: ['id', 'valueOne'],
                                 include: [
                                     {
                                         model: models.Instrument,
