@@ -1,4 +1,5 @@
 const { genSaltSync, hashSync, compareSync } = require("bcryptjs");
+const crypto = require('crypto');
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
@@ -46,6 +47,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: null
+        },
+        validEmail: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
         }
     },
     {
@@ -58,6 +64,7 @@ module.exports = (sequelize, DataTypes) => {
                     const salt = genSaltSync();
                     user.password = hashSync(user.password, salt);
                 }
+                user.validEmail = crypto.randomBytes(4).toString('hex');
             }
         },
         timestamps: true,

@@ -1,7 +1,7 @@
 const models = require("./../models/index")
 const { validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
-const { sendMail } = require('../helpers/nodemail');
+const { sendMail, validEmail } = require('../helpers/nodemail');
 const Sequelize = require('sequelize');
 const { genSaltSync, hashSync } = require("bcryptjs");
 const Op = Sequelize.Op;
@@ -70,7 +70,11 @@ class UserController{
                 expiresIn: 3600
             });
 
-            return res.status(200).json({ auth: true, token: token , user: user});
+            if(validEmail(user.email, user.validEmail)) {
+                return res.status(200).json({ auth: true, token: token , user: user});
+            };
+
+            return res.status(500).json({error: "Falha ao enviar o email de validação"});
         }catch (error){
             return res.status(500).json({error});
         }
@@ -165,8 +169,12 @@ class UserController{
             var token = jwt.sign({id: user.id}, process.env.SECRET, {
                 expiresIn: 3600
             });
+            
+            if(validEmail(user.email, user.validEmail)) {
+                return res.status(200).json({ auth: true, token: token , user: user, data, teacher, isTeacher});
+            };
 
-            return res.status(200).json({ auth: true, token: token , user: user, data, teacher, isTeacher});
+            return res.status(500).json({error: "Falha ao enviar o email de validação"});
         } catch (error) {
             return res.status(500).json({error});
         }
@@ -299,6 +307,23 @@ class UserController{
             });
 
             return res.status(200).json({valid: recovery.userId});
+        } catch(error) {
+            return res.status(500).json({error});
+        }
+    }
+
+    static async checkValid(req, res) {
+        try {
+            const user = await models.User.findOne(
+                { where: {
+                    email: req.body.email,
+                    validEmail: req.body.codigo
+                }}
+            );
+
+            if(!user) return res.status(400).json({valid: false});
+
+            return res.status(200).json({valid: true});
         } catch(error) {
             return res.status(500).json({error});
         }

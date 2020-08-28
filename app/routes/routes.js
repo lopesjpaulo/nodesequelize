@@ -36,6 +36,7 @@ routes.post("/users/googlelogin", UserController.googleLogin);
 routes.post("/users/logout", UserController.logout);
 routes.post("/users/createRecovery", UserController.createRecovery);
 routes.post("/users/checkRecovery", UserController.checkRecovery);
+routes.post("/users/checkValid", UserController.checkValid);
 routes.put("/users/instruments", verifyJWT, UserController.updateInstruments);
 routes.put("/users", verifyJWT, UserController.update);
 routes.put("/users/:userId", UserController.update);
