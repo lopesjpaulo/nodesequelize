@@ -227,6 +227,26 @@ const aulaFinalizadaEmail = (email) => {
     return true;
 }
 
+const aulaCanceladaEmail = (email, date, professorName) => {
+
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: 'Sua aula foi cancelada!',
+        text: 'Cancelamento!',
+        html: `<p>Infelizmente sua aula na data ${date} com o professor ${professorName} foi cancelada.</p><br>
+        <p>Acesse a plataforma para fazer uma remarcação de aula!</p>`
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            return false;
+        }
+    });
+
+    return true;
+}
+
 module.exports = { 
     sendMail, 
     validEmail,
@@ -238,5 +258,6 @@ module.exports = {
     aulaAgendadaAlunoEmail,
     aulaProximaProfessorEmail,
     aulaProximaAlunoEmail,
-    aulaFinalizadaEmail
+    aulaFinalizadaEmail,
+    aulaCanceladaEmail
 };

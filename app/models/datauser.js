@@ -62,7 +62,11 @@ module.exports = (sequelize, DataTypes) => {
             model: 'user',
             key: 'id'
         }
-      }
+      },
+      balance: {
+        type: DataTypes.INTEGER,
+        defaultValue: '0'
+    },
   },
   {
       classMethods: {
