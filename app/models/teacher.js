@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 module.exports = (sequelize, DataTypes) => {
     const Teacher = sequelize.define('Teacher', {
         id: {
@@ -76,14 +78,26 @@ module.exports = (sequelize, DataTypes) => {
         },
         valueOne: DataTypes.INTEGER,
         valueFive: DataTypes.INTEGER,
-        valueTen: DataTypes.INTEGER
+        valueTen: DataTypes.INTEGER,
+        codeInvite: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
+        },
+        teacherInvite: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        }
     },
     {
         classMethods: {
 
         },
         hooks: {
-
+            beforeCreate: (teacher, options) => {
+                teacher.codeInvite = crypto.randomBytes(4).toString('hex');
+            }
         },
         timestamp: true,
         paranoid: true
