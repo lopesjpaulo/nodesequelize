@@ -18,15 +18,15 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 onDelete: "CASCADE"
             },
-            paidBalance: {
+            paidBalance: { //Valor pago do saldo existente do aluno
                 type: DataTypes.INTEGER,
                 defaultValue: 0
             },  
-            paidTransaction: {
+            paidTransaction: { //Valor pago da transação com o cartão de crédito
                 type: DataTypes.INTEGER,
                 defaultValue: 0
             },
-            balanceFinal: {
+            balanceFinal: { //Valor final que sobrou no saldo do aluno, 0 se não sobrar nada
                 type: DataTypes.INTEGER,
                 allowNull: false
             },
