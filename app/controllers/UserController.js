@@ -323,6 +323,10 @@ class UserController{
 
             if(!user) return res.status(400).json({valid: false});
 
+            user.update({
+                statusEmail: 1
+            });
+
             return res.status(200).json({valid: true});
         } catch(error) {
             return res.status(500).json({error});

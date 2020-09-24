@@ -52,6 +52,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
             defaultValue: null
+        },
+        statusEmail: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     },
     {
