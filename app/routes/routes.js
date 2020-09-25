@@ -12,6 +12,7 @@ const DocumentController = require("../controllers/DocumentController");
 const DatabankController = require("../controllers/DatabankController");
 const DatauserController = require("../controllers/DatauserController");
 const ContactController = require("../controllers/ContactController");
+const CupomController = require("../controllers/CupomController");
 const BankController = require("../controllers/BankController");
 const HelperController = require("../controllers/HelperController");
 const validate = require("../helpers/validate");
@@ -168,6 +169,15 @@ routes.delete("/contacts/:id", verifyJWT, ContactController.destroy);
 
 routes.get("/banks", verifyJWT, BankController.index);
 routes.get("/banks/:id", verifyJWT, BankController.show);
+
+/* Rotas de cupons*/
+
+routes.get("/cupons", verifyJWT, CupomController.index);
+routes.get("/cupons/:id", verifyJWT, CupomController.show);
+routes.get("/cupons/freeCode/:code", verifyJWT, CupomController.showFreeCode);
+routes.post("/cupons", verifyJWT, CupomController.store);
+routes.put("/cupons", verifyJWT, CupomController.update);
+routes.delete("/cupons/:id", verifyJWT, CupomController.destroy);
 
 /* Rotas do S3 */
 
