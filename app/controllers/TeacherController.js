@@ -55,7 +55,7 @@ class TeacherController{
             if(!req.params.id) return res.status(400).json();
 
             const teacher = await models.Teacher.findByPk(req.params.id, {
-                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'about', 'status', 'type'],
+                attributes: ['id', 'birthday', 'state', 'city', 'phone', 'cpf', 'valueOne', 'about', 'status', 'type', 'codeInvite'],
                 include: [
                     {
                         model: models.Instrument,
@@ -239,7 +239,7 @@ class TeacherController{
 
             if(!teacher) return res.status(400).json({valid: false});
 
-            return res.status(200).json(teacher);
+            return res.status(200).json({valid: true, teacher});
         } catch(error) {
             return res.status(500).json({error});
         }

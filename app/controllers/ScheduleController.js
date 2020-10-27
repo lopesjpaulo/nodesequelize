@@ -2,6 +2,7 @@ const models = require("./../models/index");
 const { validationResult } = require('express-validator');
 const Sequelize = require('sequelize');
 const moment = require('moment-timezone');
+const { sendNotification }  = require("../helpers/push");
 moment().tz("America/Recife").format();
 const Op = Sequelize.Op;
 
@@ -234,7 +235,36 @@ class ScheduleController{
             let reschedule = 1;
 
             if(req.body['scheduleId']){
-                const scheduleObj = await models.Schedule.findByPk(req.body['scheduleId']);
+                const scheduleObj = await models.Schedule.findByPk(req.body['scheduleId'], {
+                    attributes: ["id", "userId", "finishedAt", "canceled", "avaliabilityId"],
+                    include: [
+                        {
+                            model: models.Avaliability,
+                            as: "avaliabilities",
+                            attributes: ["id", "date"],
+                            include: [
+                                {
+                                    model: models.Teacher,
+                                    as: "teachers",
+                                    attributes: ["id", "valueOne"],
+                                    include: [
+                                        {
+                                            model: models.User,
+                                            as: "users",
+                                            attributes: ["id", "name", "email", "playerId"]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            model: models.User,
+                            as: "users",
+                            attributes: ["id", "name", "email", "playerId"]
+                        }
+                    ]
+                });
+
                 const scheduleDeleted = await models.Schedule.destroy({
                     where:{
                         id: req.body['scheduleId']
@@ -242,6 +272,14 @@ class ScheduleController{
                 });
 
                 if(!scheduleDeleted && !scheduleObj) return res.status(400).json();
+
+                sendNotification({
+                    template_id: 'f94b5aa3-a10c-414c-af45-5923abb76109',
+                    include_player_ids: [scheduleObj.avaliabilities.teachers.users['playerId']],
+                    contents : {
+                        'en': 'O aluno reagendou uma aula para o dia ' + moment(scheduleObj.avaliabilities['date']).utc(false).format('DD/MM/YYYY') + ' às ' + moment(scheduleObj.avaliabilities['date']).utc(false).format('HH:mm')
+                    }
+                });
 
                 if(scheduleObj.canceled == 2) {
                     reschedule = 0;
@@ -270,7 +308,35 @@ class ScheduleController{
         try {
             if(!req.params.id) return res.status(400).json();
 
-            const scheduleObject = await models.Schedule.findByPk(req.params.id, {attributes: ['id', 'avaliabilityId']});
+            const scheduleObject = await models.Schedule.findByPk(req.params.id, {
+                attributes: ["id", "userId", "finishedAt", "avaliabilityId"],
+                include: [
+                    {
+                        model: models.Avaliability,
+                        as: "avaliabilities",
+                        attributes: ["id", "date"],
+                        include: [
+                            {
+                                model: models.Teacher,
+                                as: "teachers",
+                                attributes: ["id", "valueOne"],
+                                include: [
+                                    {
+                                        model: models.User,
+                                        as: "users",
+                                        attributes: ["id", "name", "email", "playerId"]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        model: models.User,
+                        as: "users",
+                        attributes: ["id", "name", "email", "playerId"]
+                    }
+                ]
+            });
 
             if(!scheduleObject) return res.status(404).json();
 
@@ -295,6 +361,24 @@ class ScheduleController{
                 },
                 { where: { id: scheduleObject.avaliabilityId }}
             );
+
+            if (req.body.isteacher) {
+                sendNotification({
+                    template_id: '2e4cbe1f-6e66-457b-a701-230aa7d1e86b',
+                    include_player_ids: [scheduleObject.avaliabilities.teachers.users['playerId']],
+                    contents : {
+                        'en': 'O professor cancelou a aula que estava agendada para o dia ' + moment(scheduleObject.avaliabilities['date']).utc(false).format('DD/MM/YYYY') + ' às ' + moment(scheduleObject.avaliabilities['date']).utc(false).format('HH:mm')
+                    }
+                });
+            } else {
+                sendNotification({
+                    template_id: 'f94b5aa3-a10c-414c-af45-5923abb76109',
+                    include_player_ids: [scheduleObject.avaliabilities.teachers.users['playerId']],
+                    contents : {
+                        'en': 'O aluno cancelou a aula que estava agendada para o dia ' + moment(scheduleObject.avaliabilities['date']).utc(false).format('DD/MM/YYYY') + ' às ' + moment(scheduleObject.avaliabilities['date']).utc(false).format('HH:mm')
+                    }
+                });
+            }
 
             if(!schedule || !avaliability) return res.status(204).json();
 

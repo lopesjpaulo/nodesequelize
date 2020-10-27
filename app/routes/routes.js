@@ -53,6 +53,7 @@ routes.put("/teachers/:id", verifyJWT, TeacherController.update);
 routes.delete("/teachers/:id", verifyJWT, TeacherController.destroy);
 routes.put("/teachers", verifyJWT, TeacherController.updateLogged);
 routes.get("/teachers/classes/:id", verifyJWT, TeacherController.countClasses);
+routes.post("/teachers/checkCode", TeacherController.checkCode);
 
 /* Rotas de Categorias */
 
