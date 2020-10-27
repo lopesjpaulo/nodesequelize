@@ -237,7 +237,7 @@ class TeacherController{
                 }}
             );
 
-            if(!teacher) return res.status(400).json({valid: false});
+            if(!teacher) return res.status(200).json({valid: false});
 
             return res.status(200).json({valid: true, teacher});
         } catch(error) {
