@@ -14,6 +14,7 @@ const DatauserController = require("../controllers/DatauserController");
 const ContactController = require("../controllers/ContactController");
 const CupomController = require("../controllers/CupomController");
 const BankController = require("../controllers/BankController");
+const LogPaymentController = require("../controllers/LogpaymentController");
 const HelperController = require("../controllers/HelperController");
 const validate = require("../helpers/validate");
 const verifyJWT = require("../middlewares/verifyJWT");
@@ -53,6 +54,7 @@ routes.put("/teachers/:id", verifyJWT, TeacherController.update);
 routes.delete("/teachers/:id", verifyJWT, TeacherController.destroy);
 routes.put("/teachers", verifyJWT, TeacherController.updateLogged);
 routes.get("/teachers/classes/:id", verifyJWT, TeacherController.countClasses);
+routes.post("/teachers/check", TeacherController.checkCode);
 
 /* Rotas de Categorias */
 
@@ -178,6 +180,14 @@ routes.get("/cupons/freeCode/:code", verifyJWT, CupomController.showFreeCode);
 routes.post("/cupons", verifyJWT, CupomController.store);
 routes.put("/cupons", verifyJWT, CupomController.update);
 routes.delete("/cupons/:id", verifyJWT, CupomController.destroy);
+
+/* Rotas de Log de Pagamentos */
+
+routes.get("/logpayments", verifyJWT, LogPaymentController.index);
+routes.get("/logpayments/:id", verifyJWT, LogPaymentController.show);
+routes.post("/logpayments", verifyJWT, LogPaymentController.store);
+routes.put("/logpayments/:id", verifyJWT, LogPaymentController.update);
+routes.delete("/logpayments/:id", verifyJWT, LogPaymentController.destroy);
 
 /* Rotas do S3 */
 
